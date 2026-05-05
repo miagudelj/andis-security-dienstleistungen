@@ -1,0 +1,81 @@
+================================================================
+BILD: Videoüberwachungssysteme (Service-Karte + Detailseite)
+================================================================
+
+GEWÄHLTES BILD
+----------------------------------------------------------------
+Datei:        public/images/services/videoueberwachungssysteme.jpg
+DB-Pfad:      /images/services/videoueberwachungssysteme.jpg
+Quelle:       Unsplash
+Foto-ID:      IJkSskfEqrM
+Foto-URL:     https://unsplash.com/photos/IJkSskfEqrM
+Direktlink:   https://images.unsplash.com/photo-1558002038-1055907df827
+Fotograf:     Sebastian Scholz (Nuki) (@nuki_io)
+Lizenz:       Unsplash License (kommerzielle Nutzung erlaubt,
+              Attribution nicht erforderlich aber empfohlen)
+Auflösung:    1600x1067 px
+Dateigrösse:  ~117 KB (JPG)
+
+BILDBESCHREIBUNG
+----------------------------------------------------------------
+Hellgrauer Smart-Lock (Türschloss-Aufsatz von Nuki) auf einer
+weissen Innentür mit Edelstahl-Türgriff. Daneben eine Hand, die
+ein iPhone hält; auf dem Display ist eine Smart-Lock-App mit
+"Locked"-Status und Buttons "Unlock", "Lock", "Open door" sicht-
+bar. Heller, moderner Innenraum mit dezenter Pflanze im Hinter-
+grund (Bokeh).
+
+EIGNUNGSANALYSE
+----------------------------------------------------------------
+[+] Vermittelt das Kern-Versprechen moderner Sicherheitssysteme:
+    "Steuerung & Überwachung per App auf dem Smartphone".
+[+] Modern, hell, sympathisch — passt zum Privat-Haushalt-
+    Zielmarkt (im Gegensatz zum eher industriellen Kamera-Bild).
+[+] Komplementär zu Bild 1: Bild 1 zeigt Hardware (Kameras),
+    Bild 2 zeigt die Nutzung/App-Steuerung.
+[+] Querformat 3:2, passt in alle Card- und Hero-Crops.
+[+] Saubere Farbpalette (Weiss, Hellgrau, Schwarzes Phone) —
+    harmoniert mit der Brand-Palette.
+[+] Klares "Smartphone in der Hand"-Motiv ist universell
+    verständlich.
+
+[-] Zeigt Smart-Lock, nicht direkt eine Kamera/Video-Feed. Wer
+    sehr wörtlich "Videoüberwachung" sucht, könnte irritiert
+    sein. → Im Service-Text aber bewusst auf "Fernzugriff per
+    App" eingegangen, damit das Bild thematisch trägt.
+[-] Marken-Hinweis: Das Schloss ist erkennbar von Nuki, der
+    Fotograf gehört zur Firma. Auf dem Display steht keine
+    Marke, aber das Hardware-Design ist Nuki-typisch.
+    → Bei Bedarf später durch ein Bild ohne erkennbare Marke
+    ersetzen (z.B. ein generisches Smartphone mit Kamera-App).
+[-] Hand sichtbar — wer "Bilder ohne Personen" wünscht, müsste
+    suchen.
+
+GESAMTBEWERTUNG: 7.5/10 — gute Wahl als Muster, mittelfristig
+durch ein markenfreies Smartphone-mit-Kamera-Feed-Bild ersetzen
+oder durch ein eigenes Foto eines selbst installierten Systems.
+
+LIZENZ-NACHWEIS (für interne Doku)
+----------------------------------------------------------------
+"Photo by Sebastian Scholz (Nuki) on Unsplash"
+Unsplash License: https://unsplash.com/license
+
+ALTERNATIVE BILDER FÜR SPÄTER (alle frei, von Unsplash überprüft)
+----------------------------------------------------------------
+- 0wEi4OMKEZY  | Turquo Cabbit – kleine Dome-Kamera an Decke
+                 (Indoor, Loft-Setting)
+                 https://images.unsplash.com/photo-1767059439630-ca3844d07d77
+
+- KNt4zd8HPb0  | Alan J. Hendry – weisse Überwachungskamera an Wand
+                 https://images.unsplash.com/photo-1549109926-58f039549485
+
+- p7Bfwn_VKRQ  | Miha Meglic – Kontrollraum mit Schreibtisch & Monitoren
+                 https://images.unsplash.com/photo-1639313521811-fdfb1c040ddb
+
+- tyVsd5BxIhQ  | Albert Stoynov – Kamera-Detailaufnahme auf Mast
+                 https://images.unsplash.com/photo-1672073311074-f60c4a5e7b92
+
+OPTIMIERUNGS-EMPFEHLUNG (vor Live-Gang)
+----------------------------------------------------------------
+- Bereits sehr klein (117 KB) — weitere Optimierung nicht
+  zwingend nötig. Trotzdem könnte WebP auf ~50-70 KB drücken.

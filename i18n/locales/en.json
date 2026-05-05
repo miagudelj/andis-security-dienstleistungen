@@ -1,0 +1,116 @@
+{
+  "site": {
+    "name": "Andi's Security",
+    "tagline": "Security services in the canton of Zurich"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact",
+    "offer": "Free Quote"
+  },
+  "hero": {
+    "eyebrow": "Security from the canton of Zurich",
+    "title": "Cameras and video surveillance — properly installed",
+    "subtitle": "We plan, install and maintain surveillance systems for your home or business. Personal advice, fair prices, locally based.",
+    "cta_primary": "Request a free quote",
+    "cta_secondary": "View services",
+    "trust_local": "Zurich region",
+    "trust_advice": "Personal advice",
+    "trust_quality": "Trusted brands"
+  },
+  "services": {
+    "section_title": "Our services",
+    "section_subtitle": "From consultation to maintenance — everything from a single source.",
+    "details": "Learn more",
+    "request_offer": "Quote for this service",
+    "back": "Back to overview",
+    "loading": "Loading…",
+    "empty": "No services published yet."
+  },
+  "offer_cta": {
+    "label": "Free quote"
+  },
+  "offer": {
+    "title": "Request a free quote",
+    "subtitle": "Get your non-binding quote in just a few steps.",
+    "step": "Step {current} of {total}",
+    "next": "Next",
+    "back": "Back",
+    "submit": "Send request",
+    "submitting": "Sending…",
+    "close": "Close",
+    "step1": {
+      "title": "Which devices are you interested in?",
+      "subtitle": "Multiple selection possible. You can adjust the quantity in the next step.",
+      "error": "Please select at least one device."
+    },
+    "step2": {
+      "title": "Quantity per device",
+      "subtitle": "Roughly how many devices do you need? An estimate is enough.",
+      "qty": "Quantity"
+    },
+    "step3": {
+      "title": "Where should the devices be installed?",
+      "subtitle": "Multiple selection possible.",
+      "error": "Please select at least one location."
+    },
+    "step4": {
+      "title": "Your contact details",
+      "subtitle": "We will get back to you within one business day.",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "zip": "ZIP",
+      "city": "City",
+      "message": "Message (optional)",
+      "message_placeholder": "Notes, wishes, preferred appointment …",
+      "consent": "I have read the {link} and accept the processing of my data for handling this request.",
+      "consent_link": "Privacy Policy"
+    },
+    "success": {
+      "title": "Thank you for your request!",
+      "body": "We have received your quote request and will get back to you within one business day.",
+      "reference": "Your reference number: {ref}",
+      "close": "Close window"
+    },
+    "errors": {
+      "generic": "Something went wrong. Please try again later.",
+      "network": "Connection problem. Please check your internet connection."
+    }
+  },
+  "footer": {
+    "tagline": "Your security. Our craft.",
+    "company": "Company",
+    "legal": "Legal",
+    "contact": "Contact",
+    "impressum": "Imprint",
+    "agb": "Terms",
+    "datenschutz": "Privacy",
+    "copyright": "© {year} Andi's Security. All rights reserved."
+  },
+  "admin": {
+    "login_title": "Admin Login",
+    "password": "Password",
+    "login_button": "Sign in",
+    "wrong_password": "Wrong password.",
+    "logout": "Sign out",
+    "dashboard": "Dashboard",
+    "tab_services": "Services",
+    "tab_offers": "Quotes",
+    "new_service": "New service",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm_delete": "Really delete?",
+    "no_offers": "No quotes received yet.",
+    "no_services": "No services yet."
+  },
+  "lang": {
+    "switch_to_en": "English",
+    "switch_to_de": "Deutsch"
+  }
+}

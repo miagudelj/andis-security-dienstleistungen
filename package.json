@@ -1,0 +1,33 @@
+{
+  "name": "andis-security-dienstleistungen",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "hash-password": "node scripts/hash-password.mjs"
+  },
+  "dependencies": {
+    "@nuxtjs/i18n": "^10.3.0",
+    "@nuxtjs/robots": "^6.0.8",
+    "@nuxtjs/sitemap": "^8.0.14",
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@pinia/nuxt": "^0.11.3",
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.9.0",
+    "nuxt": "^4.4.2",
+    "nuxt-schema-org": "^6.0.4",
+    "nuxt-security": "^2.5.1",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.33",
+    "vue-router": "^5.0.6",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "tailwindcss": "^3.4.19"
+  }
+}

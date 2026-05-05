@@ -1,0 +1,116 @@
+{
+  "site": {
+    "name": "Andi's Security",
+    "tagline": "Sicherheitsdienstleistungen im Kanton Zürich"
+  },
+  "nav": {
+    "home": "Start",
+    "services": "Dienstleistungen",
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "offer": "Gratis Offerte"
+  },
+  "hero": {
+    "eyebrow": "Sicherheit aus dem Kanton Zürich",
+    "title": "Kameras und Videoüberwachung – fachgerecht installiert",
+    "subtitle": "Wir planen, installieren und warten Überwachungssysteme für Ihr Zuhause oder Ihr Unternehmen. Persönliche Beratung, faire Preise, regional verankert.",
+    "cta_primary": "Kostenlose Offerte anfordern",
+    "cta_secondary": "Dienstleistungen ansehen",
+    "trust_local": "Region Zürich",
+    "trust_advice": "Persönliche Beratung",
+    "trust_quality": "Markenprodukte"
+  },
+  "services": {
+    "section_title": "Unsere Dienstleistungen",
+    "section_subtitle": "Von der Beratung bis zur Wartung — alles aus einer Hand.",
+    "details": "Mehr erfahren",
+    "request_offer": "Offerte zu dieser Dienstleistung",
+    "back": "Zurück zur Übersicht",
+    "loading": "Wird geladen…",
+    "empty": "Noch keine Dienstleistungen veröffentlicht."
+  },
+  "offer_cta": {
+    "label": "Gratis Offerte"
+  },
+  "offer": {
+    "title": "Kostenlose Offerte anfordern",
+    "subtitle": "In wenigen Schritten zu Ihrer unverbindlichen Offerte.",
+    "step": "Schritt {current} von {total}",
+    "next": "Weiter",
+    "back": "Zurück",
+    "submit": "Anfrage senden",
+    "submitting": "Wird gesendet…",
+    "close": "Schliessen",
+    "step1": {
+      "title": "Welche Geräte interessieren Sie?",
+      "subtitle": "Mehrfachauswahl möglich. Sie können die Anzahl im nächsten Schritt anpassen.",
+      "error": "Bitte mindestens ein Gerät auswählen."
+    },
+    "step2": {
+      "title": "Anzahl pro Gerät",
+      "subtitle": "Wie viele Geräte benötigen Sie ungefähr? Eine Schätzung genügt.",
+      "qty": "Anzahl"
+    },
+    "step3": {
+      "title": "Wo sollen die Geräte installiert werden?",
+      "subtitle": "Mehrfachauswahl möglich.",
+      "error": "Bitte mindestens einen Standort wählen."
+    },
+    "step4": {
+      "title": "Ihre Kontaktdaten",
+      "subtitle": "Wir melden uns innerhalb eines Werktags bei Ihnen.",
+      "first_name": "Vorname",
+      "last_name": "Nachname",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "zip": "PLZ",
+      "city": "Ort",
+      "message": "Nachricht (optional)",
+      "message_placeholder": "Besonderheiten, Wünsche, gewünschter Termin …",
+      "consent": "Ich habe die {link} gelesen und akzeptiere die Verarbeitung meiner Daten zur Bearbeitung der Anfrage.",
+      "consent_link": "Datenschutzerklärung"
+    },
+    "success": {
+      "title": "Vielen Dank für Ihre Anfrage!",
+      "body": "Wir haben Ihre Offerten-Anfrage erhalten und melden uns innerhalb eines Werktags bei Ihnen.",
+      "reference": "Ihre Referenznummer: {ref}",
+      "close": "Fenster schliessen"
+    },
+    "errors": {
+      "generic": "Etwas ist schiefgelaufen. Bitte später nochmals versuchen.",
+      "network": "Verbindungsproblem. Bitte prüfen Sie Ihre Internetverbindung."
+    }
+  },
+  "footer": {
+    "tagline": "Ihre Sicherheit. Unser Handwerk.",
+    "company": "Unternehmen",
+    "legal": "Rechtliches",
+    "contact": "Kontakt",
+    "impressum": "Impressum",
+    "agb": "AGB",
+    "datenschutz": "Datenschutz",
+    "copyright": "© {year} Andi's Security. Alle Rechte vorbehalten."
+  },
+  "admin": {
+    "login_title": "Admin-Login",
+    "password": "Passwort",
+    "login_button": "Anmelden",
+    "wrong_password": "Falsches Passwort.",
+    "logout": "Abmelden",
+    "dashboard": "Übersicht",
+    "tab_services": "Dienstleistungen",
+    "tab_offers": "Offerten",
+    "new_service": "Neue Dienstleistung",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "confirm_delete": "Wirklich löschen?",
+    "no_offers": "Noch keine Offerten eingegangen.",
+    "no_services": "Noch keine Dienstleistungen erfasst."
+  },
+  "lang": {
+    "switch_to_en": "English",
+    "switch_to_de": "Deutsch"
+  }
+}

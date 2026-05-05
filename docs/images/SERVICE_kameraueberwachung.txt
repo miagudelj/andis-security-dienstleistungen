@@ -1,0 +1,62 @@
+================================================================
+BILD: Kameraüberwachung (Service-Karte + Detailseite)
+================================================================
+
+GEWÄHLTES BILD
+----------------------------------------------------------------
+Datei:        public/images/services/kameraueberwachung.jpg
+DB-Pfad:      /images/services/kameraueberwachung.jpg
+Quelle:       Unsplash
+Foto-ID:      yekGLpc3vro
+Foto-URL:     https://unsplash.com/photos/yekGLpc3vro
+Direktlink:   https://images.unsplash.com/photo-1496368077930-c1e31b4e5b44
+Fotograf:     Scott Webb (@scottwebb)
+Lizenz:       Unsplash License (kommerzielle Nutzung erlaubt,
+              Attribution nicht erforderlich aber empfohlen)
+Auflösung:    1600x1067 px
+Dateigrösse:  ~421 KB (JPG)
+
+BILDBESCHREIBUNG
+----------------------------------------------------------------
+Zwei klassische Bullet-CCTV-Kameras (weiss/hellgrau, Metall),
+montiert nebeneinander an einer dunkelgrauen Beton- bzw. Mauer-
+fassade. Im oberen Bildteil ist eine Backsteinkante sichtbar.
+Die Kameras blicken in entgegengesetzte Richtungen; deutlich
+sichtbare Anschlusskabel und Verteilerdose zwischen den beiden
+Kameras. Reduzierter, fast monochromer Look in Grautönen.
+
+EIGNUNGSANALYSE
+----------------------------------------------------------------
+[+] Motiv passt 100% zum Service "Kameraüberwachung" — zwei
+    klar erkennbare Überwachungskameras im Fokus.
+[+] Sehr professionelle, ruhige Bildsprache — keine Stockfoto-
+    Klischees (keine Hände, keine Modelle, keine Logos).
+[+] Querformat 3:2, passt sowohl in 4:3 Card-Crop als auch
+    16:9 Hero-Crop.
+[+] Farbpalette (Grau + dezentes Weiss) harmoniert mit der
+    Brand-Palette (Blau / Weiss / Schwarz / Grau).
+[+] Ausreichend Negativraum links — perfekt für Text-Overlay,
+    falls später als Hero-Bild genutzt.
+[+] Keine erkennbaren Marken oder Personen.
+
+[-] Etwas dunkel — könnte auf der Service-Card kontrastreicher
+    sein. Falls das stört, leicht aufhellen mit Squoosh / Photoshop.
+[-] Wirkt eher "industriell" als "Privat-Haushalt". Für
+    Privatkunden-Fokus eventuell zusätzlich ein zweites Bild mit
+    Wohnhaus-Setting auswählen.
+
+GESAMTBEWERTUNG: 9/10 — sehr gut geeignet, kann sofort live gehen.
+
+LIZENZ-NACHWEIS (für interne Doku)
+----------------------------------------------------------------
+"Photo by Scott Webb on Unsplash"
+Unsplash License: https://unsplash.com/license
+Auszug: "Photos can be downloaded and used for free […] commercial
+and noncommercial purposes, no permission needed."
+
+OPTIMIERUNGS-EMPFEHLUNG (vor Live-Gang)
+----------------------------------------------------------------
+- Konvertieren nach WebP via https://squoosh.app/ → erwartete
+  Reduktion auf ~80-120 KB (statt 421 KB)
+- Optional: zwei Versionen erstellen (1600px für Hero/Detail,
+  800px für Service-Card), responsive auslieferung via <picture>

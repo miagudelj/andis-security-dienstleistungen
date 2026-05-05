@@ -1,0 +1,44 @@
+================================================================
+BILD: Hero-Bereich (Startseite, optional als Hintergrund)
+================================================================
+
+Stand: Aktuell wird im Hero-Bereich KEIN Foto verwendet, sondern
+ein Farbverlauf (dunkelblau zu mittelblau) mit subtilem Punktmuster.
+Das wirkt clean, lädt sehr schnell und ist gut für Mobile.
+
+Falls später ein Hintergrundbild gewünscht ist, hier die Empfehlung:
+
+Empfohlene Suchen
+----------------------------------------------------------------
+Unsplash:
+  - https://unsplash.com/s/photos/zurich-architecture
+  - https://unsplash.com/s/photos/swiss-house
+  - https://unsplash.com/s/photos/modern-home-night
+
+Pexels:
+  - https://www.pexels.com/search/modern%20villa/
+  - https://www.pexels.com/search/zurich/
+
+Bevorzugte Bildmotive
+----------------------------------------------------------------
+- Schweizer Einfamilienhaus oder modernes Mehrfamilienhaus
+  bei Dämmerung mit warmem Innenlicht.
+- ODER: Skyline Zürich (z.B. Limmat-Quaibrücke) — schafft
+  Lokalbezug.
+- ODER: Abstrakte Aussenwand-Detailaufnahme (Beton, Glas) — sehr
+  modern und neutral.
+- WICHTIG: Bild muss mit dunklem Overlay funktionieren (weisser
+  Text muss lesbar sein). Daher eher gedämpft und ohne starke
+  Farbkontraste auswählen.
+
+Falls verwendet: Performance-Hinweis
+----------------------------------------------------------------
+Hero-Bilder sind die ersten geladenen Assets — kritisch für
+Largest Contentful Paint (LCP). Daher:
+- Maximal 200 KB nach Optimierung
+- Format WebP oder AVIF
+- Bei Mobile ein kleineres Bild ausliefern (responsive srcset)
+
+Speicher-Pfad
+----------------------------------------------------------------
+public/images/hero.webp

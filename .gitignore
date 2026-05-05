@@ -1,0 +1,149 @@
+# =====================================================
+# Andis Security – .gitignore
+# Nur Sourcecode + nötige Assets gehen ins Repository.
+# Build-Output, node_modules, Secrets und lokale Daten bleiben lokal.
+# =====================================================
+
+# --- Nuxt dev/build outputs ---
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+*.tsbuildinfo
+
+# --- Node dependencies ---
+node_modules
+
+# --- Logs ---
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Test / Coverage ---
+coverage
+.nyc_output
+
+# --- Lokale Datenbank (SQLite) ---
+# DB-Datei darf nie im Repo landen (enthält echte Offerten + Hashes)
+data/
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# --- Environment / Secrets ---
+.env
+.env.*
+!.env.example
+.envrc
+.netrc
+.tool-versions.local
+
+# --- Crash- / Profiling-Artefakte (können Speicherinhalte / Tokens enthalten) ---
+*.heapsnapshot
+*.cpuprofile
+*.heapprofile
+core.*
+*.core
+*.dmp
+
+# --- SQLite Hilfsdateien (falls außerhalb von data/ erzeugt) ---
+*-shm
+*-wal
+
+# --- Terraform / IaC State (falls später hinzugefügt) ---
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+
+# --- Diverse lokale Override-Dateien ---
+local.properties
+local.config.*
+
+# --- TLS / Zertifikate / private Schlüssel (NIE ins Repo) ---
+*.pem
+*.key
+*.crt
+*.cer
+*.der
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+
+# --- Generische Secret-Dateien ---
+secrets.json
+secrets.yml
+secrets.yaml
+credentials.json
+credentials.yml
+serviceAccount*.json
+*-credentials.json
+auth.json
+
+# --- OS-spezifisch ---
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# --- IDE / Editor ---
+.idea
+.fleet
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+*.bak
+*.orig
+*.rej
+
+# --- Claude Code (lokale Session-Daten + Settings) ---
+.claude/
+
+# --- Andere AI-Tools (Cursor, Aider, Copilot lokal) ---
+.cursor/
+.aider*
+.copilot/
+
+# --- Deployment-Artefakte ---
+.vercel
+.netlify
+.wrangler
+.firebase/
+.serverless/
+
+# --- Admin-Uploads (zur Laufzeit erstellt, nicht ins Repo) ---
+public/images/uploads/*
+!public/images/uploads/.gitkeep
+
+# --- Temporäre Verzeichnisse ---
+tmp/
+temp/
+.tmp/
+
+# --- Misc ---
+*.local
+.history
