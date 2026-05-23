@@ -2,22 +2,19 @@
 const { t } = useI18n()
 const localePath = useLocalePath()
 const year = new Date().getFullYear()
+const { data: settings } = useCompanySettings()
+
+const phoneLink = computed(() => settings.value?.phone?.replace(/\s/g, '') || '')
 </script>
 
 <template>
   <footer class="mt-12 border-t border-ink-100 bg-ink-900 text-ink-100">
-    <div class="container grid gap-8 py-12 md:grid-cols-4">
+    <div class="container grid items-start gap-8 py-12 md:grid-cols-4">
       <div class="md:col-span-2">
-        <div class="flex items-center gap-2">
-          <span class="grid h-9 w-9 place-items-center rounded-lg bg-brand-600 text-white">
-            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor"><path d="M12 2 4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3Z"/></svg>
-          </span>
-          <span class="text-base font-semibold text-white">{{ t('site.name') }}</span>
-        </div>
-        <p class="mt-3 max-w-md text-sm text-ink-300">{{ t('footer.tagline') }}</p>
+        <img src="/images/presecurity-logo.png" alt="PreSecurity" class="max-h-36 w-auto" />
       </div>
 
-      <div>
+      <div class="pt-1">
         <h4 class="text-sm font-semibold text-white">{{ t('footer.legal') }}</h4>
         <ul class="mt-3 space-y-2 text-sm">
           <li><NuxtLink :to="localePath('/impressum')" class="text-ink-300 hover:text-white">{{ t('footer.impressum') }}</NuxtLink></li>
@@ -26,13 +23,15 @@ const year = new Date().getFullYear()
         </ul>
       </div>
 
-      <div>
+      <div class="pt-1">
         <h4 class="text-sm font-semibold text-white">{{ t('footer.contact') }}</h4>
         <ul class="mt-3 space-y-2 text-sm text-ink-300">
-          <li>Andi's Security</li>
-          <li>[Adresse], Kanton Zürich</li>
-          <li><a href="mailto:info@andis-security.ch" class="hover:text-white">info@andis-security.ch</a></li>
-          <li><a href="tel:+41000000000" class="hover:text-white">+41 00 000 00 00</a></li>
+          <li>{{ settings?.company_name }}</li>
+          <li v-if="settings?.street || settings?.zip || settings?.city">
+            <template v-if="settings?.street">{{ settings.street }}, </template>{{ settings?.zip }} {{ settings?.city }}<template v-if="settings?.canton">, Kanton {{ settings.canton }}</template>
+          </li>
+          <li v-if="settings?.email"><a :href="`mailto:${settings.email}`" class="hover:text-white">{{ settings.email }}</a></li>
+          <li v-if="settings?.phone"><a :href="`tel:${phoneLink}`" class="hover:text-white">{{ settings.phone }}</a></li>
         </ul>
       </div>
     </div>

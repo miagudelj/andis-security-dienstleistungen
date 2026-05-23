@@ -1,6 +1,11 @@
 <script setup lang="ts">
 const { t } = useI18n()
-useSeoMeta({ title: () => `${t('footer.impressum')} — ${t('site.name')}`, robots: 'noindex' })
+const { data: settings } = useCompanySettings()
+useSeoMeta({ title: () => `${t('site.name')} – ${t('footer.impressum')}`, robots: 'noindex' })
+
+const phoneLink = computed(() => settings.value?.phone?.replace(/\s/g, '') || '')
+const hasAddress = computed(() => settings.value?.street || settings.value?.zip || settings.value?.city)
+const hasContact = computed(() => settings.value?.phone || settings.value?.email)
 </script>
 
 <template>
@@ -9,29 +14,27 @@ useSeoMeta({ title: () => `${t('footer.impressum')} — ${t('site.name')}`, robo
       <h1 class="text-3xl font-bold tracking-tight">{{ t('footer.impressum') }}</h1>
 
       <div class="prose prose-slate mt-8 max-w-none text-ink-700">
-        <p class="rounded-lg bg-yellow-50 p-4 text-sm text-yellow-900">
-          <strong>Hinweis:</strong> Diese Seite enthält Platzhalter und muss vor dem Live-Gang vollständig durch den Inhaber ergänzt sowie rechtlich geprüft werden.
-        </p>
-
         <h2>Angaben gemäss Schweizer Recht</h2>
         <p>
-          <strong>Andi's Security Dienstleistungen</strong><br />
-          [Strasse und Hausnummer]<br />
-          [PLZ Ort], Kanton Zürich<br />
-          Schweiz
+          <strong>{{ settings?.company_name }}</strong><br />
+          <template v-if="settings?.street">{{ settings.street }}<br /></template>
+          <template v-if="settings?.zip || settings?.city">{{ settings?.zip }} {{ settings?.city }}<template v-if="settings?.canton">, Kanton {{ settings.canton }}</template><br /></template>
+          {{ settings?.country || 'Schweiz' }}
         </p>
 
         <h2>Kontakt</h2>
         <p>
-          Telefon: +41 00 000 00 00<br />
-          E-Mail: info@andis-security.ch
+          <template v-if="settings?.phone">Telefon: {{ settings.phone }}<br /></template>
+          <template v-if="settings?.email">E-Mail: {{ settings.email }}</template>
         </p>
 
         <h2>Verantwortlich für den Inhalt</h2>
-        <p>[Vor- und Nachname Inhaber:in]</p>
+        <p>{{ settings?.owner_name || '[Wird ergänzt]' }}</p>
 
-        <h2>Handelsregister / UID</h2>
-        <p>UID-Nummer: [CHE-000.000.000] (sofern eingetragen)</p>
+        <template v-if="settings?.uid_number">
+          <h2>Handelsregister / UID</h2>
+          <p>UID-Nummer: {{ settings.uid_number }}</p>
+        </template>
 
         <h2>Haftungsausschluss</h2>
         <p>

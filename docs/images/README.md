@@ -1,4 +1,4 @@
-# Bildersourcing — Andis Security
+# Bildersourcing — PreSecurity
 
 Dieses Verzeichnis dokumentiert für jedes vorgesehene Bild auf der Webseite:
 - Wo das Bild gefunden wurde (URL + Quelle)

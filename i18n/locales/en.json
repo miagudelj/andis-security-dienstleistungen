@@ -1,6 +1,7 @@
 {
   "site": {
-    "name": "Andi's Security",
+    "name": "PreSecurity",
+    "slogan": "Security in Sight. Protection in Focus.",
     "tagline": "Security services in the canton of Zurich"
   },
   "nav": {
@@ -89,7 +90,7 @@
     "impressum": "Imprint",
     "agb": "Terms",
     "datenschutz": "Privacy",
-    "copyright": "© {year} Andi's Security. All rights reserved."
+    "copyright": "© {year} PreSecurity. All rights reserved."
   },
   "admin": {
     "login_title": "Admin Login",
@@ -112,5 +113,10 @@
   "lang": {
     "switch_to_en": "English",
     "switch_to_de": "Deutsch"
+  },
+  "common": {
+    "loading": "Loading…",
+    "copy": "Copy",
+    "copied": "Copied!"
   }
 }

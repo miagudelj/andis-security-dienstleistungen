@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { t } = useI18n()
-useSeoMeta({ title: () => `${t('footer.datenschutz')} — ${t('site.name')}`, robots: 'noindex' })
+const { data: settings } = useCompanySettings()
+useSeoMeta({ title: () => `${t('site.name')} – ${t('footer.datenschutz')}`, robots: 'noindex' })
 </script>
 
 <template>
@@ -9,15 +10,11 @@ useSeoMeta({ title: () => `${t('footer.datenschutz')} — ${t('site.name')}`, ro
       <h1 class="text-3xl font-bold tracking-tight">{{ t('footer.datenschutz') }}</h1>
 
       <div class="prose prose-slate mt-8 max-w-none text-ink-700">
-        <p class="rounded-lg bg-yellow-50 p-4 text-sm text-yellow-900">
-          <strong>Hinweis:</strong> Diese Datenschutzerklärung ist eine Mustervorlage gemäss revidiertem Schweizer Datenschutzgesetz (revDSG) und muss vor dem Live-Gang angepasst und durch eine Fachperson geprüft werden.
-        </p>
-
         <h2>1. Verantwortliche Stelle</h2>
         <p>
-          Andi's Security Dienstleistungen<br />
-          [Strasse], [PLZ Ort], Schweiz<br />
-          E-Mail: info@andis-security.ch
+          {{ settings?.company_name }}<br />
+          <template v-if="settings?.street">{{ settings.street }}, </template>{{ settings?.zip }} {{ settings?.city }}, {{ settings?.country || 'Schweiz' }}<br />
+          <template v-if="settings?.email">E-Mail: {{ settings.email }}</template>
         </p>
 
         <h2>2. Erfasste Daten</h2>
@@ -47,7 +44,7 @@ useSeoMeta({ title: () => `${t('footer.datenschutz')} — ${t('site.name')}`, ro
         <h2>7. Sicherheit</h2>
         <p>Wir setzen technische und organisatorische Massnahmen ein, um Ihre Daten zu schützen: HTTPS-Verschlüsselung, Hashing von Zugangsdaten, Schutz gegen Missbrauch (Rate-Limiting, Honeypot, Content Security Policy).</p>
 
-        <p class="text-sm text-ink-500">Stand: [Datum einfügen]</p>
+        <p class="text-sm text-ink-500">Stand: Mai 2025</p>
       </div>
     </div>
   </article>

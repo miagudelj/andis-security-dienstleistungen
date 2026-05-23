@@ -17,7 +17,7 @@ const titleOf = (s: Service) => locale.value === 'en' ? s.title_en : s.title_de
 const summaryOf = (s: Service) => locale.value === 'en' ? s.summary_en : s.summary_de
 
 useSeoMeta({
-  title: () => `${t('services.section_title')} — ${t('site.name')}`,
+  title: () => `${t('site.name')} – ${t('services.section_title')}`,
   description: () => t('services.section_subtitle'),
 })
 </script>

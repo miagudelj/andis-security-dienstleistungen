@@ -1,5 +1,5 @@
 # =====================================================
-# Andis Security – .gitignore
+# PreSecurity – .gitignore
 # Nur Sourcecode + nötige Assets gehen ins Repository.
 # Build-Output, node_modules, Secrets und lokale Daten bleiben lokal.
 # =====================================================

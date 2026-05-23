@@ -1,24 +1,25 @@
 <script setup lang="ts">
 import { useOfferStore } from '~/stores/offer'
 const offer = useOfferStore()
+const { data: settings } = useCompanySettings()
 
 // Strukturierte Daten für lokale Suche (Google).
 // Defs werden nur einmal pro Seite eingefügt.
 useSchemaOrg([
   defineLocalBusiness({
-    name: "Andi's Security Dienstleistungen",
+    name: computed(() => settings.value?.company_name || 'PreSecurity'),
     description: 'Sicherheitsdienstleistungen, Kameras und Videoüberwachung im Kanton Zürich.',
     address: {
       addressCountry: 'CH',
-      addressRegion: 'Zürich',
-      addressLocality: '[Ort]',
-      postalCode: '[PLZ]',
-      streetAddress: '[Strasse Nr.]',
+      addressRegion: computed(() => settings.value?.canton || 'Zürich'),
+      addressLocality: computed(() => settings.value?.city || ''),
+      postalCode: computed(() => settings.value?.zip || ''),
+      streetAddress: computed(() => settings.value?.street || ''),
     },
-    telephone: '+41 00 000 00 00',
-    email: 'info@andis-security.ch',
+    telephone: computed(() => settings.value?.phone || ''),
+    email: computed(() => settings.value?.email || ''),
     priceRange: '$$',
-    areaServed: 'Kanton Zürich, Schweiz',
+    areaServed: computed(() => `Kanton ${settings.value?.canton || 'Zürich'}, ${settings.value?.country || 'Schweiz'}`),
   }),
 ])
 </script>

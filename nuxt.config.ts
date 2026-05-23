@@ -1,4 +1,4 @@
-// Nuxt config — Andis Security Dienstleistungen
+// Nuxt config — PreSecurity
 // SSR aktiviert für SEO. Module: Tailwind, i18n, Pinia, SEO, Security.
 
 export default defineNuxtConfig({
@@ -21,8 +21,8 @@ export default defineNuxtConfig({
 
   // ---- Site-weite SEO-Defaults (von @nuxtjs/seo) ----
   site: {
-    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://www.andis-security.ch',
-    name: "Andi's Security Dienstleistungen",
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://www.presecurity.ch',
+    name: 'PreSecurity',
     description:
       'Sicherheitslösungen für Privat und Gewerbe im Kanton Zürich. Kameras, Video­überwachung, Beratung und Installation. Jetzt kostenlose Offerte anfordern.',
     defaultLocale: 'de',
@@ -87,7 +87,11 @@ export default defineNuxtConfig({
     },
     xssValidator: { throwError: false },
     corsHandler: {
-      origin: process.env.NUXT_PUBLIC_SITE_URL || '*',
+      // In production: only allow requests from the configured site URL
+      // In development: allow localhost origins for testing
+      origin: process.env.NODE_ENV === 'production'
+        ? process.env.NUXT_PUBLIC_SITE_URL || 'https://www.presecurity.ch'
+        : ['http://localhost:3000', 'http://127.0.0.1:3000'],
       methods: ['GET', 'POST', 'PUT', 'DELETE'],
     },
   },
@@ -97,12 +101,20 @@ export default defineNuxtConfig({
     // Nur serverseitig sichtbar
     adminPasswordHash: process.env.ADMIN_PASSWORD_HASH || '',
     sessionSecret: process.env.SESSION_SECRET || '',
-    dbPath: process.env.DB_PATH || './data/andis-security.db',
+    dbPath: process.env.DB_PATH || './data/presecurity.db',
     cookieSecure: process.env.NODE_ENV === 'production',
+
+    // SMTP Konfiguration für E-Mail-Versand
+    smtpHost: process.env.SMTP_HOST || '',
+    smtpPort: process.env.SMTP_PORT || '587',
+    smtpUser: process.env.SMTP_USER || '',
+    smtpPassword: process.env.SMTP_PASSWORD || '',
+    smtpFrom: process.env.SMTP_FROM || 'noreply@presecurity.ch',
+    mailEnabled: process.env.MAIL_ENABLED === 'true',
 
     // Öffentlich (Client-Bundle)
     public: {
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://www.andis-security.ch',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://www.presecurity.ch',
     },
   },
 
@@ -115,7 +127,8 @@ export default defineNuxtConfig({
         { name: 'format-detection', content: 'telephone=no' },
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'icon', type: 'image/png', href: '/favicon.png' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
       ],
     },
   },

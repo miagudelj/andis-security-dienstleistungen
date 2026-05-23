@@ -2,11 +2,14 @@
 import { useOfferStore } from '~/stores/offer'
 const { t } = useI18n()
 const offer = useOfferStore()
+const { data: settings } = useCompanySettings()
 
 useSeoMeta({
-  title: () => `${t('nav.contact')} — ${t('site.name')}`,
+  title: () => `${t('site.name')} – ${t('nav.contact')}`,
   description: () => t('hero.subtitle'),
 })
+
+const phoneLink = computed(() => settings.value?.phone?.replace(/\s/g, '') || '')
 </script>
 
 <template>
@@ -21,13 +24,24 @@ useSeoMeta({
     <section class="section">
       <div class="container grid gap-10 md:grid-cols-2">
         <div class="card">
-          <h3 class="text-lg font-semibold">Andi's Security Dienstleistungen</h3>
+          <h3 class="text-lg font-semibold">{{ settings?.company_name }}</h3>
           <ul class="mt-4 space-y-3 text-sm text-ink-700">
-            <li class="flex gap-3"><span class="text-brand-600">📍</span><span>[Strasse Nr.]<br />[PLZ Ort], Kanton Zürich</span></li>
-            <li class="flex gap-3"><span class="text-brand-600">📞</span><a href="tel:+41000000000" class="hover:underline">+41 00 000 00 00</a></li>
-            <li class="flex gap-3"><span class="text-brand-600">✉️</span><a href="mailto:info@andis-security.ch" class="hover:underline">info@andis-security.ch</a></li>
+            <li v-if="settings?.street || settings?.zip || settings?.city" class="flex gap-3">
+              <span class="text-brand-600">📍</span>
+              <span>
+                <template v-if="settings?.street">{{ settings.street }}<br /></template>
+                {{ settings?.zip }} {{ settings?.city }}<template v-if="settings?.canton">, Kanton {{ settings.canton }}</template>
+              </span>
+            </li>
+            <li v-if="settings?.phone" class="flex gap-3">
+              <span class="text-brand-600">📞</span>
+              <a :href="`tel:${phoneLink}`" class="hover:underline">{{ settings.phone }}</a>
+            </li>
+            <li v-if="settings?.email" class="flex gap-3">
+              <span class="text-brand-600">✉️</span>
+              <a :href="`mailto:${settings.email}`" class="hover:underline">{{ settings.email }}</a>
+            </li>
           </ul>
-          <p class="mt-6 text-xs text-ink-500">[Kontaktangaben werden vom Inhaber ergänzt]</p>
         </div>
         <div class="card bg-brand-50 border-brand-100">
           <h3 class="text-lg font-semibold text-ink-900">{{ t('hero.cta_primary') }}</h3>

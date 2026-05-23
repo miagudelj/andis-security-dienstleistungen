@@ -22,14 +22,16 @@ const inverted = computed(() => isHeroDominant.value && !mobileOpen.value)
     ]"
   >
     <div class="container flex h-16 items-center justify-between gap-4">
-      <NuxtLink
-        :to="localePath('/')"
-        :class="['flex items-center gap-2 transition-colors', inverted ? 'text-white' : 'text-ink-900']"
-      >
-        <span class="grid h-9 w-9 place-items-center rounded-lg bg-brand-600 text-white">
-          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor"><path d="M12 2 4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3Z"/></svg>
-        </span>
-        <span class="text-base font-semibold tracking-tight">{{ t('site.name') }}</span>
+      <NuxtLink :to="localePath('/')" class="flex items-center gap-3">
+        <img src="/images/presecurity-icon.png" alt="" class="h-12 w-auto" />
+        <div class="flex flex-col">
+          <span class="text-xl font-bold tracking-wide leading-tight">
+            <span class="text-brand-600">PRE</span><span :class="inverted ? 'text-gray-300' : 'text-gray-500'">SECURITY</span>
+          </span>
+          <span :class="['text-[8px] tracking-wider uppercase', inverted ? 'text-white/70' : 'text-ink-500']">
+            {{ t('site.slogan') }}
+          </span>
+        </div>
       </NuxtLink>
 
       <nav class="hidden items-center gap-7 md:flex">

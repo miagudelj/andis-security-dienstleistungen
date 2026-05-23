@@ -1,4 +1,4 @@
-# Andi's Security Dienstleistungen
+# PreSecurity
 
 Webseite für Sicherheitsdienstleistungen (Kameras, Videoüberwachung) im Kanton Zürich.
 Modern, mehrsprachig (DE/EN), mit Multi-Step Offerten-Formular und Admin-GUI für die Pflege der Inhalte.
@@ -59,9 +59,9 @@ Admin-Login: http://localhost:3000/admin
 │   │   ├── index.vue            # Startseite mit Hero + Services
 │   │   ├── dienstleistungen/    # Services-Übersicht + Detailseite
 │   │   ├── kontakt.vue
-│   │   ├── impressum.vue        # ⚠ Platzhalter — vor Live-Gang anpassen
+│   │   ├── impressum.vue        # Dynamisch aus Firmendaten
 │   │   ├── agb.vue              # ⚠ Platzhalter — vor Live-Gang anpassen
-│   │   ├── datenschutz.vue      # ⚠ Platzhalter — vor Live-Gang anpassen
+│   │   ├── datenschutz.vue      # Dynamisch aus Firmendaten
 │   │   └── admin/index.vue      # Admin-GUI (Login + CRUD)
 │   ├── components/              # Header, Footer, OfferOverlay, LanguageSwitcher, ...
 │   └── stores/                  # Pinia-Stores (offer.ts)
@@ -115,14 +115,22 @@ Admin-Login: http://localhost:3000/admin
 1. http://localhost:3000/admin öffnen
 2. Mit dem konfigurierten Passwort einloggen
 3. Tabs:
-   - **Dienstleistungen**: Anlegen, Bearbeiten, Löschen — Inhalte erscheinen sofort auf der Webseite
-   - **Offerten**: Eingegangene Offerten ansehen (Kontakt, gewählte Geräte/Standorte)
+   - **Offerten**: Eingegangene Offerten ansehen, Status verwalten, Notizen hinzufügen
+   - **Dienstleistungen**: Anlegen, Bearbeiten, Löschen mit integrierter Bildverwaltung
+   - **Wizard**: Offerten-Formular konfigurieren (Schritte, Optionen, Felder)
+   - **Firmendaten**: Kontaktdaten zentral pflegen (erscheinen auf Kontakt, Impressum, Datenschutz, Footer)
 
-## Bilder hinzufügen
+## Bildverwaltung
 
-Siehe `docs/images/README.md`.
-Kurz: Bilder von Unsplash/Pexels herunterladen (kommerziell + ohne Attribution),
-in `public/images/services/` ablegen, im Admin-GUI bei der Dienstleistung den Pfad eintragen.
+Im Admin unter "Dienstleistungen" beim Bearbeiten:
+- **Bildvorschau** des aktuellen Bildes
+- **Bildgalerie** mit allen vorhandenen Bildern (Klick zum Auswählen)
+- **Drag & Drop Upload** neuer Bilder
+- **Löschen** unbenutzter Bilder direkt in der Galerie
+
+Bildordner:
+- `/public/images/services/` — Statische Bilder
+- `/public/images/uploads/` — Vom Admin hochgeladene Bilder
 
 ## Production-Build
 
@@ -133,22 +141,42 @@ npm run preview
 
 ## Vor dem Live-Gang ⚠
 
-- [ ] AGB, Impressum, Datenschutz von Fachperson prüfen lassen (aktuell Mustertexte)
-- [ ] Echte Firmen-Adresse, Telefon, E-Mail in Footer + Impressum + Schema.org eintragen
-- [ ] Echtes Logo erstellen (aktuell: Schild-Icon-Placeholder)
+- [ ] AGB von Fachperson prüfen lassen (aktuell Mustertext)
+- [ ] Firmendaten im Admin unter "Firmendaten" vollständig ausfüllen
 - [ ] Bilder durch echte Aufnahmen oder ausgewählte Stock-Fotos ersetzen
 - [ ] `NUXT_PUBLIC_SITE_URL` auf die Production-Domain setzen
 - [ ] Starkes, einzigartiges Admin-Passwort setzen (mind. 16 Zeichen, nur in `.env`)
 - [ ] HTTPS sicherstellen (Hosting muss Zertifikat liefern; Let's Encrypt oder Cloudflare)
-- [ ] Backup-Strategie für `data/andis-security.db` einrichten
+- [ ] Backup-Strategie für `data/presecurity.db` einrichten
 - [ ] Google Search Console + Bing Webmaster Tools einrichten
 - [ ] Lokale Einträge: Google Business Profile, local.ch, Yelp Schweiz
 
+## E-Mail-Bestätigung einrichten
+
+Nach Eingang einer Offerte kann automatisch eine Bestätigung an den Kunden gesendet werden.
+
+1. SMTP-Server konfigurieren in `.env`:
+```env
+MAIL_ENABLED=true
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=user@example.com
+SMTP_PASSWORD=your-password
+SMTP_FROM=noreply@presecurity.ch
+```
+
+2. Dev-Server neu starten
+
+Die E-Mail enthält:
+- Referenznummer der Offerte
+- Zusammenfassung der Kontaktdaten
+- Die vom Kunden eingegebene Nachricht
+- Hinweis, dass sich jemand innerhalb eines Werktags melden wird
+
 ## Roadmap (später)
 
-- E-Mail-Benachrichtigung bei neuen Offerten (Nodemailer)
+- E-Mail-Benachrichtigung an Admin bei neuen Offerten
 - PDF-Export der Offerten im Admin-GUI
-- Bilder direkt im Admin-GUI hochladen (statt Datei in `public/` ablegen)
 - Mehrere Admin-Accounts mit Rollen
 - Migration von SQLite zu PostgreSQL bei höherer Last
 

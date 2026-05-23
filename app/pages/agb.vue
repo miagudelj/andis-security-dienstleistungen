@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { t } = useI18n()
-useSeoMeta({ title: () => `${t('footer.agb')} — ${t('site.name')}`, robots: 'noindex' })
+useSeoMeta({ title: () => `${t('site.name')} – ${t('footer.agb')}`, robots: 'noindex' })
 </script>
 
 <template>
@@ -14,7 +14,7 @@ useSeoMeta({ title: () => `${t('footer.agb')} — ${t('site.name')}`, robots: 'n
         </p>
 
         <h2>1. Geltungsbereich</h2>
-        <p>Diese Allgemeinen Geschäftsbedingungen (AGB) regeln das Vertragsverhältnis zwischen Andi's Security Dienstleistungen ("Anbieter") und der Kundschaft im Zusammenhang mit Beratungs-, Planungs-, Installations- und Wartungsleistungen für Sicherheitssysteme.</p>
+        <p>Diese Allgemeinen Geschäftsbedingungen (AGB) regeln das Vertragsverhältnis zwischen PreSecurity ("Anbieter") und der Kundschaft im Zusammenhang mit Beratungs-, Planungs-, Installations- und Wartungsleistungen für Sicherheitssysteme.</p>
 
         <h2>2. Offerte und Vertragsabschluss</h2>
         <p>Alle Offerten sind unverbindlich und freibleibend. Ein Vertrag kommt erst durch die schriftliche Auftragsbestätigung des Anbieters bzw. mit Aufnahme der Arbeiten zustande.</p>

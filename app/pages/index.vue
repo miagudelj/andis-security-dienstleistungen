@@ -27,7 +27,7 @@ const titleOf = (s: Service) => locale.value === 'en' ? s.title_en : s.title_de
 const summaryOf = (s: Service) => locale.value === 'en' ? s.summary_en : s.summary_de
 
 useSeoMeta({
-  title: () => `${t('site.name')} — ${t('hero.title')}`,
+  title: () => `${t('site.name')} – ${t('site.slogan')}`,
   description: () => t('hero.subtitle'),
   ogTitle: () => `${t('site.name')} — ${t('hero.title')}`,
   ogDescription: () => t('hero.subtitle'),

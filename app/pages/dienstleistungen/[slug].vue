@@ -24,7 +24,7 @@ const summary = computed(() => locale.value === 'en' ? service.value!.summary_en
 const body = computed(() => locale.value === 'en' ? service.value!.body_en : service.value!.body_de)
 
 useSeoMeta({
-  title: () => `${title.value} — ${t('site.name')}`,
+  title: () => `${t('site.name')} – ${title.value}`,
   description: () => summary.value,
 })
 </script>

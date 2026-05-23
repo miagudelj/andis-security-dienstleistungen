@@ -1,6 +1,7 @@
 {
   "site": {
-    "name": "Andi's Security",
+    "name": "PreSecurity",
+    "slogan": "Sicherheit im Blick. Schutz im Fokus.",
     "tagline": "Sicherheitsdienstleistungen im Kanton Zürich"
   },
   "nav": {
@@ -89,7 +90,7 @@
     "impressum": "Impressum",
     "agb": "AGB",
     "datenschutz": "Datenschutz",
-    "copyright": "© {year} Andi's Security. Alle Rechte vorbehalten."
+    "copyright": "© {year} PreSecurity. Alle Rechte vorbehalten."
   },
   "admin": {
     "login_title": "Admin-Login",
@@ -112,5 +113,10 @@
   "lang": {
     "switch_to_en": "English",
     "switch_to_de": "Deutsch"
+  },
+  "common": {
+    "loading": "Wird geladen…",
+    "copy": "Kopieren",
+    "copied": "Kopiert!"
   }
 }

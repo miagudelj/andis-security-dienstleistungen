@@ -76,13 +76,24 @@ export function isAuthenticated(event: H3Event): boolean {
   if (!id) return false
 
   const db = useDB()
-  const row = db.prepare('SELECT expires_at FROM sessions WHERE id = ?').get(id) as { expires_at: string } | undefined
+  const row = db.prepare('SELECT expires_at, ip_hash FROM sessions WHERE id = ?').get(id) as { expires_at: string; ip_hash: string } | undefined
   if (!row) return false
 
+  // Check expiration
   if (new Date(row.expires_at).getTime() < Date.now()) {
     db.prepare('DELETE FROM sessions WHERE id = ?').run(id)
     return false
   }
+
+  // Verify IP hash matches (prevents session hijacking from different network)
+  const currentIpHash = hashIP(getRequestIP(event, { xForwardedFor: true }) || '')
+  if (row.ip_hash && currentIpHash !== row.ip_hash) {
+    // IP changed - invalidate session for security
+    db.prepare('DELETE FROM sessions WHERE id = ?').run(id)
+    logAudit('session_ip_mismatch', id.slice(0, 8), '', currentIpHash)
+    return false
+  }
+
   return true
 }
 
