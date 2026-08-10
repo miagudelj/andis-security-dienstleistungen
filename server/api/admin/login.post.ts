@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs'
 import { z } from 'zod'
 import { createSession, hashIP, logAudit } from '~~/server/utils/auth'
 import { rateLimit } from '~~/server/utils/rate-limit'
+import { useDB } from '~~/server/utils/db'
 
 const Body = z.object({
   password: z.string().min(1).max(200),
@@ -26,13 +27,20 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Ungültige Eingabe' })
   }
 
+  // Check DB first for password hash, then fall back to .env
+  const db = useDB()
+  const settings = db.prepare('SELECT admin_password_hash FROM company_settings WHERE id = 1').get() as { admin_password_hash: string } | undefined
+  const dbHash = settings?.admin_password_hash || ''
+
   const config = useRuntimeConfig()
-  if (!config.adminPasswordHash) {
+  const passwordHash = dbHash || config.adminPasswordHash
+
+  if (!passwordHash) {
     throw createError({ statusCode: 500, statusMessage: 'ADMIN_PASSWORD_HASH fehlt in .env' })
   }
 
   // Konstantzeit-Vergleich via bcrypt
-  const ok = await bcrypt.compare(parsed.data.password, config.adminPasswordHash)
+  const ok = await bcrypt.compare(parsed.data.password, passwordHash)
   if (!ok) {
     logAudit('login_failed', '', '', ipHash)
     // Künstliche Verzögerung gegen Timing-Attacks (zusätzlich zu bcrypt)

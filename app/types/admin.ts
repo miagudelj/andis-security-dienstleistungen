@@ -12,6 +12,7 @@ export interface Offer {
   last_name: string
   email: string
   phone: string
+  street: string
   zip: string
   city: string
   message: string
@@ -168,3 +169,23 @@ export function parseStepsData(offer: Offer): Record<string, any> | null {
     return null
   }
 }
+
+// Get consultation type from offer
+export function getConsultationType(offer: Offer): 'phone' | 'onsite' | null {
+  const stepsData = parseStepsData(offer)
+  if (!stepsData) return null
+
+  // Look for contact step with consultation_type
+  for (const stepData of Object.values(stepsData)) {
+    if (stepData && typeof stepData === 'object' && stepData.contact?.consultation_type) {
+      return stepData.contact.consultation_type as 'phone' | 'onsite'
+    }
+  }
+  return null
+}
+
+// Consultation type labels
+export const CONSULTATION_TYPE_LABELS = {
+  phone: { de: 'Telefonisch', en: 'By phone', color: 'bg-green-100 text-green-700' },
+  onsite: { de: 'Vor Ort (CHF 50.–)', en: 'On-site (CHF 50)', color: 'bg-amber-100 text-amber-700' },
+} as const

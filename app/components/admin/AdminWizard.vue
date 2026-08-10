@@ -12,6 +12,7 @@ const emit = defineEmits<{
   'delete': [step: WizardStep]
   'toggle-active': [step: WizardStep]
   'reload': []
+  'reorder': [stepIds: number[]]
 }>()
 
 // Step editing
@@ -32,6 +33,10 @@ const fieldLoading = ref(false)
 // Expanded steps
 const expandedSteps = ref<Set<number>>(new Set())
 
+// Drag and drop
+const draggedStepId = ref<number | null>(null)
+const dragOverStepId = ref<number | null>(null)
+
 // Field types for contact form
 const FIELD_TYPES = [
   { value: 'text', label: 'Text' },
@@ -49,6 +54,57 @@ function toggleStepExpanded(stepId: number) {
   }
 }
 
+// Drag and drop handlers
+function onDragStart(e: DragEvent, stepId: number) {
+  draggedStepId.value = stepId
+  if (e.dataTransfer) {
+    e.dataTransfer.effectAllowed = 'move'
+    e.dataTransfer.setData('text/plain', String(stepId))
+  }
+}
+
+function onDragOver(e: DragEvent, stepId: number) {
+  e.preventDefault()
+  if (e.dataTransfer) e.dataTransfer.dropEffect = 'move'
+  dragOverStepId.value = stepId
+}
+
+function onDragLeave() {
+  dragOverStepId.value = null
+}
+
+function onDragEnd() {
+  draggedStepId.value = null
+  dragOverStepId.value = null
+}
+
+function onDrop(e: DragEvent, targetStepId: number) {
+  e.preventDefault()
+  const sourceStepId = draggedStepId.value
+  if (!sourceStepId || sourceStepId === targetStepId) {
+    onDragEnd()
+    return
+  }
+
+  // Get current order
+  const stepIds = sortedSteps.value.map(s => s.id)
+  const sourceIndex = stepIds.indexOf(sourceStepId)
+  const targetIndex = stepIds.indexOf(targetStepId)
+
+  if (sourceIndex === -1 || targetIndex === -1) {
+    onDragEnd()
+    return
+  }
+
+  // Reorder
+  stepIds.splice(sourceIndex, 1)
+  stepIds.splice(targetIndex, 0, sourceStepId)
+
+  // Emit new order
+  emit('reorder', stepIds)
+  onDragEnd()
+}
+
 // =====================================================
 // STEP FUNCTIONS
 // =====================================================
@@ -64,7 +120,7 @@ function startNewWizardStep() {
     error_message_en: 'Please select at least one option.',
     is_required: true,
     min_selections: 1,
-    max_selections: 0,
+    max_selections: 99,
     sort_order: props.wizardSteps.length * 10,
     active: true,
   }
@@ -455,11 +511,28 @@ const sortedSteps = computed(() => {
       <div
         v-for="step in sortedSteps"
         :key="step.id"
-        class="rounded-xl border border-ink-200 bg-white overflow-hidden"
-        :class="{ 'border-ink-300 bg-ink-50/50': !step.active }"
+        draggable="true"
+        class="rounded-xl border border-ink-200 bg-white overflow-hidden transition-all"
+        :class="{
+          'border-ink-300 bg-ink-50/50': !step.active,
+          'opacity-50': draggedStepId === step.id,
+          'border-brand-500 border-2': dragOverStepId === step.id && draggedStepId !== step.id,
+        }"
+        @dragstart="onDragStart($event, step.id)"
+        @dragover="onDragOver($event, step.id)"
+        @dragleave="onDragLeave"
+        @dragend="onDragEnd"
+        @drop="onDrop($event, step.id)"
       >
         <!-- Step Header -->
         <div class="flex items-center gap-3 p-4">
+          <!-- Drag Handle -->
+          <div class="cursor-grab text-ink-300 hover:text-ink-500" title="Ziehen zum Sortieren">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
+            </svg>
+          </div>
+
           <!-- Expand Button -->
           <button
             v-if="hasExpandableContent(step)"

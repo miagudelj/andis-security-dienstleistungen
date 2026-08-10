@@ -15,7 +15,7 @@
     "eyebrow": "Security from the canton of Zurich",
     "title": "Cameras and video surveillance — properly installed",
     "subtitle": "We plan, install and maintain surveillance systems for your home or business. Personal advice, fair prices, locally based.",
-    "cta_primary": "Request a free quote",
+    "cta_primary": "Request free quote",
     "cta_secondary": "View services",
     "trust_local": "Zurich region",
     "trust_advice": "Personal advice",
@@ -36,6 +36,7 @@
   "offer": {
     "title": "Request a free quote",
     "subtitle": "Get your non-binding quote in just a few steps.",
+    "pricing_note": "Phone consultation free · On-site visit CHF 50 (refunded when order is placed)",
     "step": "Step {current} of {total}",
     "next": "Next",
     "back": "Back",
@@ -60,6 +61,9 @@
     "step4": {
       "title": "Your contact details",
       "subtitle": "We will get back to you within one business day.",
+      "consultation_type": "Preferred consultation type",
+      "consultation_phone": "By phone (free)",
+      "consultation_onsite": "On-site (CHF 50, deducted from order)",
       "first_name": "First name",
       "last_name": "Last name",
       "email": "Email",
@@ -73,7 +77,7 @@
     },
     "success": {
       "title": "Thank you for your request!",
-      "body": "We have received your quote request and will get back to you within one business day.",
+      "body": "We have received your quote request and will contact you within one business day.",
       "reference": "Your reference number: {ref}",
       "close": "Close window"
     },

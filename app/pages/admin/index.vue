@@ -43,7 +43,7 @@ const companySettings = ref<CompanySettings>({
 // Polling & alerts
 let sessionCheckInterval: ReturnType<typeof setInterval> | null = null
 let offerPollInterval: ReturnType<typeof setInterval> | null = null
-const lastOfferCount = ref(0)
+const lastOfferId = ref(0)
 const newOfferAlert = ref(false)
 
 // =====================================================
@@ -78,7 +78,9 @@ async function loadOffers() {
   try {
     const o = await fetchWithAuth<Offer[]>('/api/admin/offers')
     offers.value = o
-    lastOfferCount.value = o.length
+    if (o.length > 0) {
+      lastOfferId.value = Math.max(...o.map(x => x.id))
+    }
   } catch { /* handled */ }
 }
 
@@ -112,24 +114,21 @@ async function loadAllData() {
 // =====================================================
 // POLLING
 // =====================================================
-async function refreshOffers() {
+async function checkForNewOffers() {
   if (!authed.value) return
   try {
-    const newOffers = await fetchWithAuth<Offer[]>('/api/admin/offers')
-    if (newOffers) {
-      if (lastOfferCount.value > 0 && newOffers.length > lastOfferCount.value) {
-        newOfferAlert.value = true
-        setTimeout(() => { newOfferAlert.value = false }, 5000)
-      }
-      lastOfferCount.value = newOffers.length
-      offers.value = newOffers
+    const latest = await fetchWithAuth<{ latestId: number; latestAt: string | null }>('/api/admin/offers/latest')
+    if (latest.latestId > lastOfferId.value) {
+      // New offer detected - reload all offers
+      await loadOffers()
+      newOfferAlert.value = true
     }
   } catch { /* silent */ }
 }
 
 function startOfferPolling() {
   if (offerPollInterval) return
-  offerPollInterval = setInterval(refreshOffers, 15000)
+  offerPollInterval = setInterval(checkForNewOffers, 15000) // Check every 15 seconds
 }
 
 function stopOfferPolling() {
@@ -230,6 +229,18 @@ async function deleteService(service: Service) {
   }
 }
 
+async function toggleServicePublished(service: Service) {
+  try {
+    await fetchWithAuth(`/api/admin/services/${service.id}`, {
+      method: 'PUT',
+      body: { published: !service.published },
+    })
+    service.published = service.published ? 0 : 1
+  } catch (e) {
+    console.error('Failed to toggle service', e)
+  }
+}
+
 // =====================================================
 // WIZARD ACTIONS
 // =====================================================
@@ -270,6 +281,18 @@ async function toggleWizardStepActive(step: WizardStep) {
     step.active = !step.active
   } catch (e) {
     console.error('Failed to toggle step', e)
+  }
+}
+
+async function reorderWizardSteps(stepIds: number[]) {
+  try {
+    await fetchWithAuth('/api/admin/wizard/steps/reorder', {
+      method: 'PUT',
+      body: { stepIds },
+    })
+    await loadWizardSteps()
+  } catch (e) {
+    console.error('Failed to reorder wizard steps', e)
   }
 }
 
@@ -451,6 +474,7 @@ onBeforeUnmount(() => {
             :services="services"
             @save="saveService"
             @delete="deleteService"
+            @toggle-published="toggleServicePublished"
           />
 
           <AdminWizard
@@ -460,6 +484,7 @@ onBeforeUnmount(() => {
             @delete="deleteWizardStep"
             @toggle-active="toggleWizardStepActive"
             @reload="loadWizardSteps"
+            @reorder="reorderWizardSteps"
           />
 
           <AdminSettings

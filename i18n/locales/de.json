@@ -15,7 +15,7 @@
     "eyebrow": "Sicherheit aus dem Kanton Zürich",
     "title": "Kameras und Videoüberwachung – fachgerecht installiert",
     "subtitle": "Wir planen, installieren und warten Überwachungssysteme für Ihr Zuhause oder Ihr Unternehmen. Persönliche Beratung, faire Preise, regional verankert.",
-    "cta_primary": "Kostenlose Offerte anfordern",
+    "cta_primary": "Kostenlose Offerte anfragen",
     "cta_secondary": "Dienstleistungen ansehen",
     "trust_local": "Region Zürich",
     "trust_advice": "Persönliche Beratung",
@@ -34,8 +34,9 @@
     "label": "Gratis Offerte"
   },
   "offer": {
-    "title": "Kostenlose Offerte anfordern",
+    "title": "Kostenlose Offerte anfragen",
     "subtitle": "In wenigen Schritten zu Ihrer unverbindlichen Offerte.",
+    "pricing_note": "Telefonische Beratung kostenlos · Vor-Ort-Termin CHF 50.– (wird bei Auftragserteilung zurückvergütet)",
     "step": "Schritt {current} von {total}",
     "next": "Weiter",
     "back": "Zurück",
@@ -60,6 +61,9 @@
     "step4": {
       "title": "Ihre Kontaktdaten",
       "subtitle": "Wir melden uns innerhalb eines Werktags bei Ihnen.",
+      "consultation_type": "Gewünschte Beratungsart",
+      "consultation_phone": "Telefonisch (kostenlos)",
+      "consultation_onsite": "Vor Ort (CHF 50.–, wird vom Auftrag abgezogen)",
       "first_name": "Vorname",
       "last_name": "Nachname",
       "email": "E-Mail",
@@ -73,7 +77,7 @@
     },
     "success": {
       "title": "Vielen Dank für Ihre Anfrage!",
-      "body": "Wir haben Ihre Offerten-Anfrage erhalten und melden uns innerhalb eines Werktags bei Ihnen.",
+      "body": "Wir haben Ihre Offertanfrage erhalten und melden uns innerhalb eines Werktags bei Ihnen.",
       "reference": "Ihre Referenznummer: {ref}",
       "close": "Fenster schliessen"
     },

@@ -7,10 +7,10 @@ Swiss security services company website (cameras, video surveillance) for Canton
 - **Framework:** Nuxt 4.4.2 (Vue 3, SSR)
 - **Styling:** Tailwind CSS 3.4
 - **State:** Pinia
-- **Database:** SQLite (better-sqlite3)
+- **Database:** SQLite (better-sqlite3, WAL mode)
 - **Auth:** bcryptjs + HMAC-signed sessions
 - **i18n:** German (primary) + English
-- **Email:** Nodemailer
+- **Email:** Nodemailer (currently disabled)
 - **Validation:** Zod
 
 ## Commands
@@ -27,17 +27,27 @@ npm run hash-password # Generate bcrypt hash for admin password
 ```
 app/
 ├── pages/           # Routes (index, kontakt, admin, dienstleistungen/[slug])
-├── components/      # Vue components (wizard/ for multi-step form)
+├── components/      # Vue components (wizard/, admin/)
+│   └── admin/       # AdminOffers, AdminServices, AdminWizard, AdminSettings
 ├── layouts/         # default.vue (public), admin.vue
 ├── stores/          # Pinia stores (offer.ts)
-└── composables/     # useHeroVisibility.ts
+├── composables/     # useHeroVisibility, useCompanySettings
+└── types/           # admin.ts (types, constants, helpers)
 
 server/
 ├── api/
 │   ├── services/    # Public service endpoints
 │   ├── offers/      # Offer submission
 │   ├── wizard/      # Wizard config endpoint
-│   └── admin/       # Protected CRUD (services, offers, wizard config)
+│   ├── settings.get.ts  # Public company settings
+│   └── admin/       # Protected CRUD endpoints
+│       ├── services/    # CRUD + image management
+│       ├── offers/      # Status/assignee/notes updates
+│       ├── wizard/      # steps/, options/, contact-fields/
+│       ├── settings/    # Company settings CRUD
+│       ├── images/      # Image list & delete
+│       ├── uploads/     # Image upload
+│       └── password.put.ts  # Admin password change
 └── utils/
     ├── db.ts        # SQLite schema & initialization
     ├── auth.ts      # Session management, IP hashing, audit log
@@ -55,16 +65,22 @@ data/                # SQLite database (auto-created, gitignored)
 - All inputs validated with Zod
 - Admin routes use `requireAdmin(event)` middleware
 - Errors via `createError({ statusCode, statusMessage })`
+- **PUT endpoints use dynamic UPDATE queries** — only provided fields are updated
+- **Boolean fields accept both `true/false` and `1/0`** via `z.union([z.boolean(), z.number()])`
+- **English fields are optional** with `.default('')`
+- **sort_order auto-calculated** if not provided: `MAX(sort_order) + 10`
 
 ### Components
 - Composition API with `<script setup lang="ts">`
 - Translations via `const { t } = useI18n()`
 - SEO via `useSeoMeta()`
+- **Date formatting:** Swiss format `DD.MM.YYYY` via `toLocaleDateString('de-CH')`
 
 ### Database
 - Access via `useDB()` singleton from `/server/utils/db.ts`
 - Prepared statements: `db.prepare(sql).run/get/all()`
 - Schema auto-created on first run
+- WAL mode enabled for better concurrency
 
 ### Styling
 - Tailwind utility classes, mobile-first
@@ -92,7 +108,7 @@ Optional:
 ```
 DB_PATH=./data/presecurity.db
 NUXT_PUBLIC_SITE_URL=https://presecurity.ch
-MAIL_ENABLED=true
+MAIL_ENABLED=false      # Currently disabled
 SMTP_HOST=
 SMTP_PORT=
 SMTP_USER=
@@ -102,23 +118,48 @@ SMTP_FROM=
 
 ## Database Tables
 
-- `services` - CMS content (title_de/en, body, image_path, published)
-- `offers` - Submitted quotes with reference numbers and status
+- `services` - CMS content (title_de/en, summary, body, image_path, published)
+- `offers` - Submitted quotes with reference numbers, status, assigned_to, notes
 - `sessions` - Auth sessions with expiry
-- `wizard_steps` - Dynamic form step configuration
-- `wizard_options` - Step options (labels, icons)
+- `wizard_steps` - Dynamic form step configuration (drag & drop sortable)
+- `wizard_options` - Step options (labels, icons, descriptions)
 - `wizard_contact_fields` - Contact form field definitions
 - `company_settings` - Firmendaten (single row, id=1)
 - `audit_log` - Admin action history
 
 ## Admin Panel
 
-Located at `/admin`. Features:
-- Tab-based interface (Dienstleistungen, Offerten, Wizard, Firmendaten)
-- Service CRUD with image upload
-- Offer management with status workflow
-- Dynamic wizard step builder
-- Company settings management (address, contact, UID)
+Located at `/admin`. Password: configured via `ADMIN_PASSWORD_HASH` env var.
+
+### Tabs
+
+1. **Dienstleistungen**
+   - Service CRUD with slug, titles (DE/EN), summaries, body text
+   - Image field with drag & drop upload
+   - Image picker modal with gallery of existing images
+   - Delete unused images
+
+2. **Offerten**
+   - Table view (default) or card view
+   - Pagination (25/50/100 per page) for thousands of offers
+   - Filters: search, status, date range
+   - Click row to open slide-over detail panel
+   - Inline status/assignee editing
+   - Internal notes field
+   - Swiss date format (DD.MM.YYYY)
+
+3. **Wizard**
+   - Step management (multi_select, single_select, quantity_input, contact_form, free_text)
+   - Drag & drop reordering of steps
+   - Options per step with icons
+   - Contact form field configuration
+   - Active/inactive toggle
+
+4. **Firmendaten**
+   - Company name, owner, address
+   - Phone, email, website
+   - UID (Unternehmens-Identifikationsnummer)
+   - Password change functionality
 
 ## Composables
 
@@ -142,50 +183,17 @@ Company settings are stored in DB and displayed on:
 - `SiteFooter.vue` - Contact column
 - `default.vue` - Schema.org LocalBusiness data
 
+## Offer/Consultation Pricing
+
+- **Offerte (Quote):** Kostenlos (free)
+- **Telefonische Beratung:** Kostenlos (free)
+- **Vor-Ort-Beratung:** CHF 50.– (refunded upon order confirmation)
+- Displayed in: Blue CTA banner, Wizard step 4 consultation type selection
+
 ## Notes
 
-- Legal pages use dynamic company settings (no more placeholders)
+- Legal pages use dynamic company settings
 - Default locale is German, English available via language switcher
 - Images stored in `/public/images/` and `/public/images/uploads/`
 - Database: `data/presecurity.db` (single file, WAL mode)
-
----
-
-## Session Progress (2026-05-23)
-
-### Completed
-1. ✅ Logo integration (transparent PNG, icon + text in header, full in footer)
-2. ✅ Renamed "Presecure" → "PreSecurity" across entire codebase
-3. ✅ Header: Icon + styled text "PRESECURITY" + slogan
-4. ✅ Footer: Logo aligned, text columns with pt-1
-5. ✅ Page titles: "PreSecurity – [Page]" format
-6. ✅ Company settings system:
-   - DB table `company_settings`
-   - API endpoints `/api/settings` (public) and `/api/admin/settings` (CRUD)
-   - Admin tab "Firmendaten" with form
-   - Composable `useCompanySettings()`
-   - Dynamic data on kontakt, impressum, datenschutz, footer, Schema.org
-7. ✅ Database migration:
-   - Transferred offer "Noelle Walter" from andis-security.db
-   - Updated service images from old DB
-   - Renamed presecure.db → presecurity.db
-   - Deleted old DBs (andis-security.db, presecure.db)
-8. ✅ Image Management im Admin:
-   - API `/api/admin/images` GET - Liste aller Bilder mit Nutzungsstatus
-   - API `/api/admin/images/[filename]` DELETE - Unbenutzte Bilder löschen
-   - AdminServices: Bildvorschau bei Services
-   - AdminServices: Bildgalerie mit Klick-Auswahl
-   - AdminServices: Drag & Drop Upload
-   - AdminServices: Löschen unbenutzter Bilder
-
-### Current State
-- Build: ✅ Passing
-- Database: `data/presecurity.db` (single file, all data migrated)
-- Services: 2 (with correct image paths)
-- Offers: 2 (PRE-20260516-0DCB13, PRE-20260523-858694)
-- Company settings: Default values (need to be filled in admin)
-
-### Pending / TODO
-- [ ] Fill in actual company data in Admin → Firmendaten
-- [ ] Review and finalize legal pages content
-- [ ] Set up .env with ADMIN_PASSWORD_HASH and SESSION_SECRET for production
+- Email sending currently disabled (MAIL_ENABLED=false)

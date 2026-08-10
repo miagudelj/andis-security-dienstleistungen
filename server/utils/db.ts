@@ -196,9 +196,23 @@ function initSchema(db: Database.Database) {
     // Column already exists
   }
 
+  // Add street column to offers if not exists
+  try {
+    db.exec(`ALTER TABLE offers ADD COLUMN street TEXT NOT NULL DEFAULT ''`)
+  } catch {
+    // Column already exists
+  }
+
   // Add autocomplete column to wizard_contact_fields if not exists
   try {
     db.exec(`ALTER TABLE wizard_contact_fields ADD COLUMN autocomplete TEXT NOT NULL DEFAULT ''`)
+  } catch {
+    // Column already exists
+  }
+
+  // Add admin_password_hash column to company_settings if not exists
+  try {
+    db.exec(`ALTER TABLE company_settings ADD COLUMN admin_password_hash TEXT NOT NULL DEFAULT ''`)
   } catch {
     // Column already exists
   }

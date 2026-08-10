@@ -17,6 +17,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   'save': [service: Partial<Service>, isNew: boolean]
   'delete': [service: Service]
+  'toggle-published': [service: Service]
   'reload': []
 }>()
 
@@ -232,7 +233,14 @@ function formatSize(bytes: number): string {
             <label class="label">Bild</label>
 
             <!-- Current Image Preview -->
-            <div v-if="serviceForm.image_path" class="mt-2 flex items-start gap-4">
+            <div
+              v-if="serviceForm.image_path"
+              class="mt-2 flex items-start gap-4 rounded-lg border-2 border-dashed p-3 transition-colors"
+              :class="isDragging ? 'border-brand-500 bg-brand-50' : 'border-transparent'"
+              @drop.prevent="handleDrop"
+              @dragover.prevent="handleDragOver"
+              @dragleave="handleDragLeave"
+            >
               <img :src="serviceForm.image_path" :alt="serviceForm.title_de" class="h-32 w-48 rounded-lg border border-ink-200 object-cover" />
               <div class="flex flex-col gap-2">
                 <span class="text-sm text-ink-500 break-all">{{ serviceForm.image_path }}</span>
@@ -240,14 +248,30 @@ function formatSize(bytes: number): string {
                   <button type="button" class="text-sm text-brand-600 hover:underline" @click="openImagePicker">Ändern</button>
                   <button type="button" class="text-sm text-red-600 hover:underline" @click="clearImage">Entfernen</button>
                 </div>
+                <span v-if="isDragging" class="text-sm text-brand-600">Bild hier ablegen...</span>
+                <span v-else class="text-xs text-ink-400">Oder neues Bild hierher ziehen</span>
               </div>
             </div>
 
-            <!-- No Image -->
-            <div v-else class="mt-2">
-              <button type="button" class="btn-ghost border border-dashed border-ink-300 w-full py-8" @click="openImagePicker">
-                <span class="text-ink-500">📷 Bild auswählen oder hochladen</span>
-              </button>
+            <!-- No Image - Drop Zone -->
+            <div
+              v-else
+              class="mt-2 rounded-lg border-2 border-dashed p-6 text-center transition-colors cursor-pointer"
+              :class="isDragging ? 'border-brand-500 bg-brand-50' : 'border-ink-300 hover:border-ink-400'"
+              @drop.prevent="handleDrop"
+              @dragover.prevent="handleDragOver"
+              @dragleave="handleDragLeave"
+              @click="openImagePicker"
+            >
+              <div v-if="uploadLoading" class="text-ink-500">Wird hochgeladen...</div>
+              <div v-else-if="isDragging" class="text-brand-600">Bild hier ablegen...</div>
+              <div v-else>
+                <svg class="mx-auto h-10 w-10 text-ink-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <p class="mt-2 text-sm text-ink-600">Bild hierher ziehen</p>
+                <p class="text-xs text-ink-400">oder klicken zum Auswählen</p>
+              </div>
             </div>
           </div>
 
@@ -374,11 +398,18 @@ function formatSize(bytes: number): string {
 
         <div class="flex-1">
           <div class="flex items-center gap-2">
-            <span class="font-medium">{{ s.title_de }}</span>
-            <span v-if="!s.published" class="rounded bg-ink-100 px-1.5 py-0.5 text-xs text-ink-500">Entwurf</span>
+            <span class="font-medium" :class="s.published ? 'text-ink-900' : 'text-ink-500'">{{ s.title_de }}</span>
+            <span v-if="!s.published" class="rounded bg-ink-200 px-2 py-0.5 text-xs text-ink-500">Inaktiv</span>
           </div>
           <div class="text-sm text-ink-500">{{ s.slug }}</div>
         </div>
+        <button
+          class="text-sm"
+          :class="s.published ? 'text-ink-600 hover:text-ink-800' : 'text-brand-600 hover:text-brand-800'"
+          @click="emit('toggle-published', s)"
+        >
+          {{ s.published ? 'Deaktivieren' : 'Aktivieren' }}
+        </button>
         <button class="text-sm text-brand-600 hover:underline" @click="editService(s)">Bearbeiten</button>
         <button class="text-sm text-red-600 hover:underline" @click="deleteService(s)">Löschen</button>
       </div>

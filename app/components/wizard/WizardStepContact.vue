@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { useOfferStore, type WizardStep } from '~/stores/offer'
 
 defineProps<{ step: WizardStep }>()
@@ -35,6 +36,22 @@ function onInput(fieldName: string, value: string | boolean) {
   offer.setContactField(fieldName, value)
   offer.clearFieldError(fieldName)
 }
+
+// Initialize consultation_type to 'phone' (free option) if not set
+onMounted(() => {
+  if (!offer.getContactField('consultation_type')) {
+    offer.setContactField('consultation_type', 'phone')
+  }
+})
+
+function getConsultationType(): string {
+  const val = offer.getContactField('consultation_type')
+  return typeof val === 'string' ? val : 'phone'
+}
+
+function setConsultationType(value: string) {
+  offer.setContactField('consultation_type', value)
+}
 </script>
 
 <template>
@@ -47,6 +64,42 @@ function onInput(fieldName: string, value: string | boolean) {
     </p>
 
     <div class="mt-5 space-y-4">
+      <!-- Consultation Type Selection -->
+      <div class="rounded-lg border border-ink-200 bg-ink-50/50 p-4">
+        <label class="label mb-3">
+          {{ t('offer.step4.consultation_type') }}
+          <span class="text-red-500">*</span>
+        </label>
+        <div class="space-y-3">
+          <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-ink-200 bg-white p-3 transition-colors hover:border-brand-300" :class="{ 'border-brand-500 ring-1 ring-brand-500': getConsultationType() === 'phone' }">
+            <input
+              type="radio"
+              name="consultation_type"
+              value="phone"
+              :checked="getConsultationType() === 'phone'"
+              class="mt-0.5 h-4 w-4 text-brand-600 focus:ring-brand-500"
+              @change="setConsultationType('phone')"
+            />
+            <div>
+              <span class="font-medium text-ink-900">{{ t('offer.step4.consultation_phone') }}</span>
+            </div>
+          </label>
+          <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-ink-200 bg-white p-3 transition-colors hover:border-brand-300" :class="{ 'border-brand-500 ring-1 ring-brand-500': getConsultationType() === 'onsite' }">
+            <input
+              type="radio"
+              name="consultation_type"
+              value="onsite"
+              :checked="getConsultationType() === 'onsite'"
+              class="mt-0.5 h-4 w-4 text-brand-600 focus:ring-brand-500"
+              @change="setConsultationType('onsite')"
+            />
+            <div>
+              <span class="font-medium text-ink-900">{{ t('offer.step4.consultation_onsite') }}</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
       <template v-for="field in step.contact_fields" :key="field.field_name">
         <!-- Text/Email/Tel inputs -->
         <div v-if="field.field_type === 'text' || field.field_type === 'email' || field.field_type === 'tel'">

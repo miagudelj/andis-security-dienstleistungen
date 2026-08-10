@@ -24,7 +24,7 @@ export default defineNuxtConfig({
     url: process.env.NUXT_PUBLIC_SITE_URL || 'https://www.presecurity.ch',
     name: 'PreSecurity',
     description:
-      'Sicherheitslösungen für Privat und Gewerbe im Kanton Zürich. Kameras, Video­überwachung, Beratung und Installation. Jetzt kostenlose Offerte anfordern.',
+      'Sicherheitslösungen für Privat und Gewerbe im Kanton Zürich. Kameras, Video­überwachung, Beratung und Installation. Wir beraten Sie gerne — jetzt unverbindlich anfragen.',
     defaultLocale: 'de',
     indexable: true,
   },

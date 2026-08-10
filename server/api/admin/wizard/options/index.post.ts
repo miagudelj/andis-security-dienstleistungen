@@ -6,12 +6,12 @@ const Body = z.object({
   step_id: z.number().int().positive(),
   slug: z.string().regex(/^[a-z0-9-]+$/).max(100),
   label_de: z.string().min(1).max(200),
-  label_en: z.string().min(1).max(200),
+  label_en: z.string().max(200).default(''),
   description_de: z.string().max(500).default(''),
   description_en: z.string().max(500).default(''),
   icon: z.string().max(50).default(''),
-  sort_order: z.number().int().min(0).max(9999).default(0),
-  active: z.boolean().default(true),
+  sort_order: z.number().int().min(0).max(9999).optional(),
+  active: z.union([z.boolean(), z.number()]).default(true),
 })
 
 export default defineEventHandler(async (event) => {
@@ -31,13 +31,20 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 404, statusMessage: 'Schritt nicht gefunden' })
   }
 
+  // Auto-calculate sort_order if not provided
+  let sortOrder = data.sort_order
+  if (sortOrder === undefined) {
+    const maxSort = db.prepare('SELECT MAX(sort_order) as max FROM wizard_options WHERE step_id = ?').get(data.step_id) as { max: number | null }
+    sortOrder = (maxSort?.max ?? 0) + 10
+  }
+
   try {
     const result = db.prepare(`
       INSERT INTO wizard_options (step_id, slug, label_de, label_en, description_de, description_en, icon, sort_order, active)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
       data.step_id, data.slug, data.label_de, data.label_en, data.description_de, data.description_en,
-      data.icon, data.sort_order, data.active ? 1 : 0
+      data.icon, sortOrder, data.active ? 1 : 0
     )
 
     const ipHash = hashIP(getRequestIP(event, { xForwardedFor: true }) || '')

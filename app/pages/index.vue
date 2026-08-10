@@ -130,6 +130,12 @@ useSeoMeta({
             <div class="min-w-0">
               <h3 class="text-xl font-semibold sm:text-2xl">{{ t('hero.cta_primary') }}</h3>
               <p class="mt-1 text-sm text-brand-100 sm:text-base">{{ t('offer.subtitle') }}</p>
+              <p class="mt-2 flex items-center gap-1.5 text-xs text-brand-200">
+                <svg viewBox="0 0 24 24" class="h-3.5 w-3.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
+                </svg>
+                {{ t('offer.pricing_note') }}
+              </p>
             </div>
             <button class="btn shrink-0 !bg-white !text-brand-700 hover:!bg-ink-100" @click="offer.openOverlay()">
               {{ t('nav.offer') }} →

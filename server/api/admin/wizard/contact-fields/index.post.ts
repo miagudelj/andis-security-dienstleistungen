@@ -7,13 +7,13 @@ const Body = z.object({
   field_name: z.string().regex(/^[a-z_]+$/).max(50),
   field_type: z.enum(['text', 'email', 'tel', 'textarea', 'checkbox']),
   label_de: z.string().min(1).max(200),
-  label_en: z.string().min(1).max(200),
+  label_en: z.string().max(200).default(''),
   placeholder_de: z.string().max(200).default(''),
   placeholder_en: z.string().max(200).default(''),
-  is_required: z.boolean().default(true),
+  is_required: z.union([z.boolean(), z.number()]).default(true),
   autocomplete: z.string().max(100).default(''),
   validation_regex: z.string().max(200).default(''),
-  sort_order: z.number().int().min(0).max(9999).default(0),
+  sort_order: z.number().int().min(0).max(9999).optional(),
 })
 
 export default defineEventHandler(async (event) => {
@@ -36,13 +36,20 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Kontaktfelder können nur zu contact_form Schritten hinzugefügt werden' })
   }
 
+  // Auto-calculate sort_order if not provided
+  let sortOrder = data.sort_order
+  if (sortOrder === undefined) {
+    const maxSort = db.prepare('SELECT MAX(sort_order) as max FROM wizard_contact_fields WHERE step_id = ?').get(data.step_id) as { max: number | null }
+    sortOrder = (maxSort?.max ?? 0) + 10
+  }
+
   try {
     const result = db.prepare(`
       INSERT INTO wizard_contact_fields (step_id, field_name, field_type, label_de, label_en, placeholder_de, placeholder_en, is_required, autocomplete, validation_regex, sort_order)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
       data.step_id, data.field_name, data.field_type, data.label_de, data.label_en,
-      data.placeholder_de, data.placeholder_en, data.is_required ? 1 : 0, data.autocomplete, data.validation_regex, data.sort_order
+      data.placeholder_de, data.placeholder_en, data.is_required ? 1 : 0, data.autocomplete, data.validation_regex, sortOrder
     )
 
     const ipHash = hashIP(getRequestIP(event, { xForwardedFor: true }) || '')

@@ -15,6 +15,15 @@ const settingsEditing = ref(false)
 const settingsLoading = ref(false)
 const settingsSaved = ref(false)
 
+// Password change state
+const showPasswordForm = ref(false)
+const currentPassword = ref('')
+const newPassword = ref('')
+const confirmPassword = ref('')
+const passwordLoading = ref(false)
+const passwordError = ref('')
+const passwordSuccess = ref(false)
+
 function startEditSettings() {
   settingsForm.value = { ...props.settings }
   settingsEditing.value = true
@@ -35,6 +44,53 @@ async function saveSettings() {
     setTimeout(() => { settingsSaved.value = false }, 3000)
   } finally {
     settingsLoading.value = false
+  }
+}
+
+function togglePasswordForm() {
+  showPasswordForm.value = !showPasswordForm.value
+  resetPasswordForm()
+}
+
+function resetPasswordForm() {
+  currentPassword.value = ''
+  newPassword.value = ''
+  confirmPassword.value = ''
+  passwordError.value = ''
+  passwordSuccess.value = false
+}
+
+async function changePassword() {
+  passwordError.value = ''
+  passwordSuccess.value = false
+
+  if (newPassword.value.length < 8) {
+    passwordError.value = 'Neues Passwort muss mindestens 8 Zeichen haben.'
+    return
+  }
+
+  if (newPassword.value !== confirmPassword.value) {
+    passwordError.value = 'Passwörter stimmen nicht überein.'
+    return
+  }
+
+  passwordLoading.value = true
+  try {
+    await $fetch('/api/admin/password', {
+      method: 'PUT',
+      body: {
+        currentPassword: currentPassword.value,
+        newPassword: newPassword.value,
+      },
+    })
+    passwordSuccess.value = true
+    resetPasswordForm()
+    showPasswordForm.value = false
+    setTimeout(() => { passwordSuccess.value = false }, 5000)
+  } catch (e: any) {
+    passwordError.value = e?.data?.statusMessage || e?.statusMessage || 'Passwort konnte nicht geändert werden.'
+  } finally {
+    passwordLoading.value = false
   }
 }
 </script>
@@ -152,6 +208,73 @@ async function saveSettings() {
           {{ settingsLoading ? 'Speichern...' : 'Speichern' }}
         </button>
       </div>
+    </div>
+
+    <!-- Password Change Section -->
+    <div class="mt-8">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold">Passwort ändern</h2>
+        <div class="flex items-center gap-3">
+          <span v-if="passwordSuccess" class="text-sm text-emerald-600">Passwort geändert!</span>
+          <button v-if="!showPasswordForm" class="btn-ghost" @click="togglePasswordForm">
+            Passwort ändern
+          </button>
+        </div>
+      </div>
+
+      <div v-if="showPasswordForm" class="mt-4 rounded-xl border border-ink-200 bg-white p-6">
+        <div class="max-w-md space-y-4">
+          <div>
+            <label class="label">Aktuelles Passwort</label>
+            <input
+              v-model="currentPassword"
+              type="password"
+              class="input"
+              autocomplete="current-password"
+              required
+            />
+          </div>
+          <div>
+            <label class="label">Neues Passwort</label>
+            <input
+              v-model="newPassword"
+              type="password"
+              class="input"
+              autocomplete="new-password"
+              minlength="8"
+              required
+            />
+            <p class="mt-1 text-xs text-ink-500">Mindestens 8 Zeichen</p>
+          </div>
+          <div>
+            <label class="label">Neues Passwort bestätigen</label>
+            <input
+              v-model="confirmPassword"
+              type="password"
+              class="input"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+
+          <p v-if="passwordError" class="text-sm text-red-600">{{ passwordError }}</p>
+
+          <div class="flex gap-3 pt-2">
+            <button class="btn-ghost" @click="togglePasswordForm">Abbrechen</button>
+            <button
+              class="btn-primary"
+              :disabled="passwordLoading || !currentPassword || !newPassword || !confirmPassword"
+              @click="changePassword"
+            >
+              {{ passwordLoading ? 'Wird geändert...' : 'Passwort ändern' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <p v-else class="mt-2 text-sm text-ink-500">
+        Hier können Sie das Admin-Passwort jederzeit ändern.
+      </p>
     </div>
   </div>
 </template>

@@ -97,6 +97,7 @@ export default defineEventHandler(async (event) => {
     const lastName = typeof contactData.last_name === 'string' ? contactData.last_name : ''
     const email = typeof contactData.email === 'string' ? contactData.email : ''
     const phone = typeof contactData.phone === 'string' ? contactData.phone : ''
+    const street = typeof contactData.street === 'string' ? contactData.street : ''
     const zip = typeof contactData.zip === 'string' ? contactData.zip : ''
     const city = typeof contactData.city === 'string' ? contactData.city : ''
     const message = typeof contactData.message === 'string' ? contactData.message : ''
@@ -140,14 +141,14 @@ export default defineEventHandler(async (event) => {
     const reference = `PRE-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${randomBytes(3).toString('hex').toUpperCase()}`
 
     useDB().prepare(`
-      INSERT INTO offers (reference, devices_json, locations_json, steps_data_json, first_name, last_name, email, phone, zip, city, message, consent, ip_hash, user_agent)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO offers (reference, devices_json, locations_json, steps_data_json, first_name, last_name, email, phone, street, zip, city, message, consent, ip_hash, user_agent)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
       reference,
       '[]', // Empty for new format
       '[]', // Empty for new format
       JSON.stringify(d.steps),
-      firstName, lastName, email, phone, zip, city, message,
+      firstName, lastName, email, phone, street, zip, city, message,
       1, ipHash, userAgent,
     )
 
@@ -160,6 +161,7 @@ export default defineEventHandler(async (event) => {
       lastName,
       email,
       phone,
+      street,
       zip,
       city,
       message,
