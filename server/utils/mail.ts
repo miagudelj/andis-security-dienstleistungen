@@ -2,6 +2,15 @@ import nodemailer from 'nodemailer'
 
 let transporter: nodemailer.Transporter | null = null
 
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
 export function getMailTransporter(): nodemailer.Transporter | null {
   const config = useRuntimeConfig()
 
@@ -49,10 +58,11 @@ export async function sendOfferConfirmation(data: OfferConfirmationData): Promis
   }
 
   const isGerman = data.locale === 'de'
+  const safeRef = escapeHtml(data.reference)
 
   const subject = isGerman
-    ? `Ihre Offertanfrage ${data.reference} bei PreSecurity`
-    : `Your quote request ${data.reference} at PreSecurity`
+    ? `Ihre Offertanfrage ${safeRef} bei PreSecurity`
+    : `Your quote request ${safeRef} at PreSecurity`
 
   const html = isGerman
     ? generateGermanEmail(data, config.public.siteUrl)
@@ -79,6 +89,17 @@ export async function sendOfferConfirmation(data: OfferConfirmationData): Promis
 }
 
 function generateGermanEmail(data: OfferConfirmationData, siteUrl: string): string {
+  const safe = {
+    firstName: escapeHtml(data.firstName),
+    lastName: escapeHtml(data.lastName),
+    email: escapeHtml(data.email),
+    phone: escapeHtml(data.phone),
+    zip: escapeHtml(data.zip),
+    city: escapeHtml(data.city),
+    reference: escapeHtml(data.reference),
+    message: data.message ? escapeHtml(data.message) : '',
+  }
+
   return `
 <!DOCTYPE html>
 <html lang="de">
@@ -96,12 +117,12 @@ function generateGermanEmail(data: OfferConfirmationData, siteUrl: string): stri
 
       <h2 style="color: #18181b; font-size: 20px; margin-bottom: 16px;">Vielen Dank für Ihre Anfrage!</h2>
 
-      <p style="color: #3f3f46;">Guten Tag ${data.firstName} ${data.lastName},</p>
+      <p style="color: #3f3f46;">Guten Tag ${safe.firstName} ${safe.lastName},</p>
 
       <p style="color: #3f3f46;">wir haben Ihre Offertanfrage erfolgreich erhalten. Ihre Referenznummer lautet:</p>
 
       <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 16px; text-align: center; margin: 24px 0;">
-        <span style="font-family: monospace; font-size: 20px; font-weight: bold; color: #0369a1;">${data.reference}</span>
+        <span style="font-family: monospace; font-size: 20px; font-weight: bold; color: #0369a1;">${safe.reference}</span>
       </div>
 
       <p style="color: #3f3f46;"><strong>Wir melden uns innerhalb eines Werktages bei Ihnen</strong>, um die Details zu besprechen und einen Termin zu vereinbaren.</p>
@@ -109,15 +130,15 @@ function generateGermanEmail(data: OfferConfirmationData, siteUrl: string): stri
       <hr style="border: none; border-top: 1px solid #e4e4e7; margin: 32px 0;">
 
       <h3 style="color: #18181b; font-size: 16px; margin-bottom: 12px;">Ihre Kontaktdaten</h3>
-      <p style="color: #52525b; margin: 4px 0;"><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
-      <p style="color: #52525b; margin: 4px 0;"><strong>E-Mail:</strong> ${data.email}</p>
-      <p style="color: #52525b; margin: 4px 0;"><strong>Telefon:</strong> ${data.phone}</p>
-      <p style="color: #52525b; margin: 4px 0;"><strong>Ort:</strong> ${data.zip} ${data.city}</p>
+      <p style="color: #52525b; margin: 4px 0;"><strong>Name:</strong> ${safe.firstName} ${safe.lastName}</p>
+      <p style="color: #52525b; margin: 4px 0;"><strong>E-Mail:</strong> ${safe.email}</p>
+      <p style="color: #52525b; margin: 4px 0;"><strong>Telefon:</strong> ${safe.phone}</p>
+      <p style="color: #52525b; margin: 4px 0;"><strong>Ort:</strong> ${safe.zip} ${safe.city}</p>
 
-      ${data.message ? `
+      ${safe.message ? `
       <h3 style="color: #18181b; font-size: 16px; margin: 24px 0 12px;">Ihre Nachricht</h3>
       <div style="background: #fafafa; border-radius: 8px; padding: 16px;">
-        <p style="color: #52525b; margin: 0; white-space: pre-line;">${escapeHtml(data.message)}</p>
+        <p style="color: #52525b; margin: 0; white-space: pre-line;">${safe.message}</p>
       </div>
       ` : ''}
 
@@ -141,6 +162,17 @@ function generateGermanEmail(data: OfferConfirmationData, siteUrl: string): stri
 }
 
 function generateEnglishEmail(data: OfferConfirmationData, siteUrl: string): string {
+  const safe = {
+    firstName: escapeHtml(data.firstName),
+    lastName: escapeHtml(data.lastName),
+    email: escapeHtml(data.email),
+    phone: escapeHtml(data.phone),
+    zip: escapeHtml(data.zip),
+    city: escapeHtml(data.city),
+    reference: escapeHtml(data.reference),
+    message: data.message ? escapeHtml(data.message) : '',
+  }
+
   return `
 <!DOCTYPE html>
 <html lang="en">
@@ -158,12 +190,12 @@ function generateEnglishEmail(data: OfferConfirmationData, siteUrl: string): str
 
       <h2 style="color: #18181b; font-size: 20px; margin-bottom: 16px;">Thank you for your inquiry!</h2>
 
-      <p style="color: #3f3f46;">Dear ${data.firstName} ${data.lastName},</p>
+      <p style="color: #3f3f46;">Dear ${safe.firstName} ${safe.lastName},</p>
 
       <p style="color: #3f3f46;">We have successfully received your quote request. Your reference number is:</p>
 
       <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 16px; text-align: center; margin: 24px 0;">
-        <span style="font-family: monospace; font-size: 20px; font-weight: bold; color: #0369a1;">${data.reference}</span>
+        <span style="font-family: monospace; font-size: 20px; font-weight: bold; color: #0369a1;">${safe.reference}</span>
       </div>
 
       <p style="color: #3f3f46;"><strong>We will contact you within one business day</strong> to discuss the details and schedule an appointment.</p>
@@ -171,15 +203,15 @@ function generateEnglishEmail(data: OfferConfirmationData, siteUrl: string): str
       <hr style="border: none; border-top: 1px solid #e4e4e7; margin: 32px 0;">
 
       <h3 style="color: #18181b; font-size: 16px; margin-bottom: 12px;">Your Contact Details</h3>
-      <p style="color: #52525b; margin: 4px 0;"><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
-      <p style="color: #52525b; margin: 4px 0;"><strong>Email:</strong> ${data.email}</p>
-      <p style="color: #52525b; margin: 4px 0;"><strong>Phone:</strong> ${data.phone}</p>
-      <p style="color: #52525b; margin: 4px 0;"><strong>Location:</strong> ${data.zip} ${data.city}</p>
+      <p style="color: #52525b; margin: 4px 0;"><strong>Name:</strong> ${safe.firstName} ${safe.lastName}</p>
+      <p style="color: #52525b; margin: 4px 0;"><strong>Email:</strong> ${safe.email}</p>
+      <p style="color: #52525b; margin: 4px 0;"><strong>Phone:</strong> ${safe.phone}</p>
+      <p style="color: #52525b; margin: 4px 0;"><strong>Location:</strong> ${safe.zip} ${safe.city}</p>
 
-      ${data.message ? `
+      ${safe.message ? `
       <h3 style="color: #18181b; font-size: 16px; margin: 24px 0 12px;">Your Message</h3>
       <div style="background: #fafafa; border-radius: 8px; padding: 16px;">
-        <p style="color: #52525b; margin: 0; white-space: pre-line;">${escapeHtml(data.message)}</p>
+        <p style="color: #52525b; margin: 0; white-space: pre-line;">${safe.message}</p>
       </div>
       ` : ''}
 
@@ -266,13 +298,4 @@ Your PreSecurity Team
 
 © ${new Date().getFullYear()} PreSecurity · Security Solutions for Zurich
 `.trim()
-}
-
-function escapeHtml(text: string): string {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
 }

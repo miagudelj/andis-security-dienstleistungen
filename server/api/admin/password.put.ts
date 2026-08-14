@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs'
 import { z } from 'zod'
 import { requireAdmin, logAudit, hashIP } from '~~/server/utils/auth'
+import { rateLimit } from '~~/server/utils/rate-limit'
 import { useDB } from '~~/server/utils/db'
 
 const Body = z.object({
@@ -10,6 +11,17 @@ const Body = z.object({
 
 export default defineEventHandler(async (event) => {
   requireAdmin(event)
+
+  const ip = getRequestIP(event, { xForwardedFor: true }) || ''
+  const ipHash = hashIP(ip)
+
+  const rl = rateLimit({ key: `password:${ipHash}`, max: 5, windowMs: 15 * 60 * 1000 })
+  if (!rl.ok) {
+    throw createError({
+      statusCode: 429,
+      statusMessage: `Zu viele Versuche. Bitte in ${rl.retryAfterSec}s erneut versuchen.`,
+    })
+  }
 
   const parsed = Body.safeParse(await readBody(event))
   if (!parsed.success) {
@@ -42,7 +54,6 @@ export default defineEventHandler(async (event) => {
   // Save to database
   db.prepare('UPDATE company_settings SET admin_password_hash = ?, updated_at = datetime(\'now\') WHERE id = 1').run(newHash)
 
-  const ipHash = hashIP(getRequestIP(event, { xForwardedFor: true }) || '')
   logAudit('password_changed', '', '', ipHash)
 
   return { ok: true }

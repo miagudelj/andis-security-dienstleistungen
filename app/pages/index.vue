@@ -5,7 +5,7 @@ import { useHeroVisibility } from '~/composables/useHeroVisibility'
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
 const offer = useOfferStore()
-const { heroEl, heroPresent, isAtTop, isHeroDominant } = useHeroVisibility()
+const { heroEl, heroPresent, isHeroDominant } = useHeroVisibility()
 // Synchron im setup() setzen — gilt schon für SSR + erste Hydration, kein Flash.
 heroPresent.value = true
 

@@ -18,7 +18,6 @@ const emit = defineEmits<{
   'save': [service: Partial<Service>, isNew: boolean]
   'delete': [service: Service]
   'toggle-published': [service: Service]
-  'reload': []
 }>()
 
 const serviceEditing = ref<Service | null>(null)
@@ -174,7 +173,6 @@ async function deleteImage(img: ImageInfo) {
 
 // Computed
 const unusedImages = computed(() => images.value.filter(i => !i.used))
-const usedImages = computed(() => images.value.filter(i => i.used))
 
 function formatSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`

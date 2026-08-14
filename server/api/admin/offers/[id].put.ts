@@ -70,7 +70,8 @@ export default defineEventHandler(async (event) => {
   values.push(id)
   db.prepare(`UPDATE offers SET ${updates.join(', ')} WHERE id = ?`).run(...values)
 
-  logAudit('offer.update', existing.reference, JSON.stringify(parsed.data))
+  const ipHash = hashIP(getRequestIP(event, { xForwardedFor: true }) || '')
+  logAudit('offer_updated', existing.reference, JSON.stringify(parsed.data), ipHash)
 
   return { ok: true }
 })

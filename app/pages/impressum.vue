@@ -4,8 +4,6 @@ const { data: settings } = useCompanySettings()
 useSeoMeta({ title: () => `${t('site.name')} – ${t('footer.impressum')}`, robots: 'noindex' })
 
 const phoneLink = computed(() => settings.value?.phone?.replace(/\s/g, '') || '')
-const hasAddress = computed(() => settings.value?.street || settings.value?.zip || settings.value?.city)
-const hasContact = computed(() => settings.value?.phone || settings.value?.email)
 </script>
 
 <template>

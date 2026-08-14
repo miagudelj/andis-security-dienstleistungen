@@ -17,7 +17,7 @@ const settingsSchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  await requireAdmin(event)
+  requireAdmin(event)
 
   const body = await readBody(event)
   const parsed = settingsSchema.safeParse(body)
@@ -58,8 +58,8 @@ export default defineEventHandler(async (event) => {
     data.owner_name
   )
 
-  const ip = getRequestIP(event, { xForwardedFor: true }) || 'unknown'
-  logAudit(db, 'settings_update', 'company_settings', '', hashIP(ip))
+  const ipHash = hashIP(getRequestIP(event, { xForwardedFor: true }) || '')
+  logAudit('settings_updated', 'company_settings', '', ipHash)
 
   return { success: true }
 })

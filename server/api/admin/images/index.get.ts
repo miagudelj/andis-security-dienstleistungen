@@ -4,7 +4,7 @@ import { readdir, stat } from 'fs/promises'
 import { join } from 'path'
 
 export default defineEventHandler(async (event) => {
-  await requireAdmin(event)
+  requireAdmin(event)
 
   const db = useDB()
   const uploadsDir = join(process.cwd(), 'public', 'images', 'uploads')
