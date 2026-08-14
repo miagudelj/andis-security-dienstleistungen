@@ -47,15 +47,15 @@ function getSlogan(member: TeamMember): string {
           <div class="h-8 w-8 animate-spin rounded-full border-4 border-brand-600 border-t-transparent"></div>
         </div>
 
-        <!-- Team Grid -->
+        <!-- Team Grid - Cards with Hover Effect -->
         <div v-else-if="teamMembers && teamMembers.length > 0" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <article
             v-for="member in teamMembers"
             :key="member.id"
-            class="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-ink-100 transition-all duration-300 hover:shadow-lg hover:ring-brand-200 hover:-translate-y-1"
+            class="group relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-ink-100 transition-all duration-300 hover:shadow-xl"
           >
-            <!-- Image / Placeholder -->
-            <div class="relative aspect-[4/5] overflow-hidden bg-ink-100">
+            <!-- Image Container -->
+            <div class="relative aspect-[4/5] overflow-hidden">
               <img
                 v-if="member.image_path"
                 :src="member.image_path"
@@ -71,24 +71,31 @@ function getSlogan(member: TeamMember): string {
                 </span>
               </div>
 
-              <!-- Subtle overlay on hover -->
-              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
-            </div>
+              <!-- Blue overlay on hover (same gradient as headers) -->
+              <div class="absolute inset-0 bg-gradient-to-br from-ink-900/90 via-brand-900/90 to-brand-800/90 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center p-6 text-center">
+                <!-- Name slides up -->
+                <h3 class="text-xl font-bold text-white mb-2 transform translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
+                  {{ member.first_name }} {{ member.last_name }}
+                </h3>
+                <!-- Position fades in -->
+                <p class="text-sm text-white/90 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
+                  {{ getPosition(member) }}
+                </p>
+                <!-- Slogan fades in -->
+                <p
+                  v-if="getSlogan(member)"
+                  class="text-sm text-white/80 italic mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150 line-clamp-3"
+                >
+                  "{{ getSlogan(member) }}"
+                </p>
+              </div>
 
-            <!-- Content -->
-            <div class="p-5">
-              <h3 class="text-lg font-semibold text-ink-900">
-                {{ member.first_name }} {{ member.last_name }}
-              </h3>
-              <p class="mt-1 text-sm font-medium text-brand-600">
-                {{ getPosition(member) }}
-              </p>
-              <p
-                v-if="getSlogan(member)"
-                class="mt-3 text-sm italic text-ink-500 leading-relaxed"
-              >
-                "{{ getSlogan(member) }}"
-              </p>
+              <!-- Name at bottom (visible when not hovering) -->
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-4 transition-opacity duration-300 group-hover:opacity-0">
+                <h3 class="text-lg font-semibold text-white">
+                  {{ member.first_name }} {{ member.last_name }}
+                </h3>
+              </div>
             </div>
           </article>
         </div>
