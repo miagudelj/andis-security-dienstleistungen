@@ -4,7 +4,7 @@ import { join, resolve } from 'node:path'
 import { requireAdmin, hashIP, logAudit } from '~~/server/utils/auth'
 import { rateLimit } from '~~/server/utils/rate-limit'
 
-const MAX_BYTES = 5 * 1024 * 1024
+const MAX_BYTES = 15 * 1024 * 1024 // 15MB
 const UPLOAD_SUBDIR = 'images/uploads'
 
 type Detected = { ext: 'jpg' | 'png' | 'webp' | 'gif' | 'avif'; mime: string } | null
@@ -65,7 +65,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Feld "file" fehlt.' })
   }
   if (file.data.length > MAX_BYTES) {
-    throw createError({ statusCode: 413, statusMessage: 'Datei zu gross (max. 5 MB).' })
+    throw createError({ statusCode: 413, statusMessage: 'Datei zu gross (max. 15 MB).' })
   }
 
   // Defense-in-depth: Client-MIME muss in Whitelist (Bonus-Check, eigentlich verlassen wir uns auf Magic-Bytes).

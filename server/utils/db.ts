@@ -166,6 +166,24 @@ function initSchema(db: Database.Database) {
 
     -- Insert default row if not exists
     INSERT OR IGNORE INTO company_settings (id) VALUES (1);
+
+    -- Team members table
+    CREATE TABLE IF NOT EXISTS team_members (
+      id              INTEGER PRIMARY KEY AUTOINCREMENT,
+      first_name      TEXT NOT NULL,
+      last_name       TEXT NOT NULL,
+      position_de     TEXT NOT NULL,
+      position_en     TEXT NOT NULL DEFAULT '',
+      slogan_de       TEXT NOT NULL DEFAULT '',
+      slogan_en       TEXT NOT NULL DEFAULT '',
+      image_path      TEXT NOT NULL DEFAULT '',
+      sort_order      INTEGER NOT NULL DEFAULT 0,
+      active          INTEGER NOT NULL DEFAULT 1,
+      created_at      TEXT NOT NULL DEFAULT (datetime('now')),
+      updated_at      TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_team_members_active ON team_members(active, sort_order);
   `)
 
   // Add steps_data_json column if not exists

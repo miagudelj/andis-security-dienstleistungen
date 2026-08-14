@@ -82,8 +82,8 @@ export default defineNuxtConfig({
       throwError: true,
     },
     requestSizeLimiter: {
-      maxRequestSizeInBytes: 1024 * 200, // 200 KB
-      maxUploadFileRequestInBytes: 1024 * 1024 * 5, // 5 MB
+      maxRequestSizeInBytes: 1024 * 500, // 500 KB
+      maxUploadFileRequestInBytes: 1024 * 1024 * 15, // 15 MB
     },
     xssValidator: { throwError: false },
     corsHandler: {

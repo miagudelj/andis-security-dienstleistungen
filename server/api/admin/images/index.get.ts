@@ -14,9 +14,10 @@ export default defineEventHandler(async (event) => {
   const uploadFiles = await readdir(uploadsDir).catch(() => [])
   const serviceFiles = await readdir(servicesDir).catch(() => [])
 
-  // Get used images from database
-  const usedImages = db.prepare('SELECT image_path FROM services WHERE image_path IS NOT NULL').all() as { image_path: string }[]
-  const usedPaths = new Set(usedImages.map(i => i.image_path))
+  // Get used images from database (services + team_members)
+  const usedInServices = db.prepare("SELECT image_path FROM services WHERE image_path IS NOT NULL AND image_path != ''").all() as { image_path: string }[]
+  const usedInTeam = db.prepare("SELECT image_path FROM team_members WHERE image_path IS NOT NULL AND image_path != ''").all() as { image_path: string }[]
+  const usedPaths = new Set([...usedInServices, ...usedInTeam].map(i => i.image_path))
 
   // Build image list with usage info
   const images: { path: string; filename: string; folder: string; used: boolean; size: number }[] = []

@@ -2,50 +2,67 @@
 const { t } = useI18n()
 const { data: settings } = useCompanySettings()
 useSeoMeta({ title: () => `${t('site.name')} – ${t('footer.datenschutz')}`, robots: 'noindex' })
+
+const address = computed(() => {
+  const parts = []
+  if (settings.value?.street) parts.push(settings.value.street)
+  if (settings.value?.zip || settings.value?.city) {
+    parts.push(`${settings.value?.zip || ''} ${settings.value?.city || ''}`.trim())
+  }
+  return parts.join(', ')
+})
 </script>
 
 <template>
-  <article class="bg-white">
-    <div class="container max-w-3xl py-14 md:py-20">
-      <h1 class="text-3xl font-bold tracking-tight">{{ t('footer.datenschutz') }}</h1>
+  <div class="bg-white">
+    <section class="relative overflow-hidden bg-gradient-to-br from-ink-900 via-brand-900 to-brand-800 text-white">
+      <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 20%, white 1px, transparent 1px); background-size: 32px 32px;" />
+      <div class="container relative max-w-3xl py-14 md:py-20">
+        <h1 class="text-3xl font-bold tracking-tight text-white md:text-4xl">{{ t('legal.datenschutz.title') }}</h1>
+      </div>
+    </section>
 
-      <div class="prose prose-slate mt-8 max-w-none text-ink-700">
-        <h2>1. Verantwortliche Stelle</h2>
+    <article class="container max-w-3xl py-10 md:py-14">
+      <div class="prose prose-slate max-w-none text-ink-700">
+        <h2>{{ t('legal.datenschutz.responsible.title') }}</h2>
         <p>
           {{ settings?.company_name }}<br />
-          <template v-if="settings?.street">{{ settings.street }}, </template>{{ settings?.zip }} {{ settings?.city }}, {{ settings?.country || 'Schweiz' }}<br />
-          <template v-if="settings?.email">E-Mail: {{ settings.email }}</template>
+          <template v-if="address">{{ address }}, </template>{{ settings?.country || 'Schweiz' }}<br />
+          <template v-if="settings?.email">{{ t('footer.contact') }}: {{ settings.email }}</template>
         </p>
 
-        <h2>2. Erfasste Daten</h2>
-        <p>Wir erfassen folgende Daten, wenn Sie uns über das Offerten-Formular kontaktieren:</p>
+        <h2>{{ t('legal.datenschutz.data.title') }}</h2>
+        <p>{{ t('legal.datenschutz.data.intro') }}</p>
         <ul>
-          <li>Vor- und Nachname</li>
-          <li>E-Mail-Adresse</li>
-          <li>Telefonnummer</li>
-          <li>PLZ und Ort</li>
-          <li>Angaben zu gewünschten Geräten und Standorten</li>
-          <li>Optionale Nachricht</li>
-          <li>Technische Daten: IP-Adresse (gehasht), Browser-Information, Zeitstempel</li>
+          <li>{{ t('legal.datenschutz.data.items.name') }}</li>
+          <li>{{ t('legal.datenschutz.data.items.email') }}</li>
+          <li>{{ t('legal.datenschutz.data.items.phone') }}</li>
+          <li>{{ t('legal.datenschutz.data.items.address') }}</li>
+          <li>{{ t('legal.datenschutz.data.items.services') }}</li>
+          <li>{{ t('legal.datenschutz.data.items.message') }}</li>
         </ul>
+        <p>{{ t('legal.datenschutz.data.technical') }}</p>
 
-        <h2>3. Zweck der Datenverarbeitung</h2>
-        <p>Die erhobenen Daten werden ausschliesslich zur Bearbeitung Ihrer Offerten-Anfrage und zur Kontaktaufnahme verwendet. Es findet keine Weitergabe an Dritte zu Werbezwecken statt.</p>
+        <h2>{{ t('legal.datenschutz.purpose.title') }}</h2>
+        <p>{{ t('legal.datenschutz.purpose.text') }}</p>
 
-        <h2>4. Speicherdauer</h2>
-        <p>Anfragen werden so lange gespeichert, wie es zur Bearbeitung Ihrer Anfrage und zur Erfüllung allfälliger gesetzlicher Aufbewahrungspflichten notwendig ist (in der Regel 10 Jahre für Geschäftsunterlagen gemäss Schweizer Obligationenrecht).</p>
+        <h2>{{ t('legal.datenschutz.retention.title') }}</h2>
+        <p>{{ t('legal.datenschutz.retention.text') }}</p>
 
-        <h2>5. Cookies und Tracking</h2>
-        <p>Diese Webseite verwendet ausschliesslich technisch notwendige Session-Cookies (z.B. für den Admin-Login). Es findet kein Tracking durch Drittanbieter statt.</p>
+        <h2>{{ t('legal.datenschutz.cookies.title') }}</h2>
+        <p>{{ t('legal.datenschutz.cookies.text') }}</p>
 
-        <h2>6. Ihre Rechte</h2>
-        <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung sowie Einschränkung der Verarbeitung Ihrer personenbezogenen Daten. Wenden Sie sich dazu an die oben genannte E-Mail-Adresse.</p>
+        <h2>{{ t('legal.datenschutz.rights.title') }}</h2>
+        <p>{{ t('legal.datenschutz.rights.text') }}</p>
 
-        <h2>7. Sicherheit</h2>
-        <p>Wir setzen technische und organisatorische Massnahmen ein, um Ihre Daten zu schützen: HTTPS-Verschlüsselung, Hashing von Zugangsdaten, Schutz gegen Missbrauch (Rate-Limiting, Honeypot, Content Security Policy).</p>
+        <h2>{{ t('legal.datenschutz.security.title') }}</h2>
+        <p>{{ t('legal.datenschutz.security.text') }}</p>
 
-        <p class="text-sm text-ink-500">Stand: Mai 2025</p>
+        <h2>{{ t('legal.datenschutz.changes.title') }}</h2>
+        <p>{{ t('legal.datenschutz.changes.text') }}</p>
+
+        <p class="text-sm text-ink-500 mt-8">{{ t('legal.datenschutz.updated') }}</p>
       </div>
-    </div>
-  </article>
+    </article>
+  </div>
 </template>

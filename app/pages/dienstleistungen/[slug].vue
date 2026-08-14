@@ -16,7 +16,7 @@ const slug = route.params.slug as string
 const { data: service, error } = await useAsyncData(`service-${slug}`, () => $fetch<Service>(`/api/services/${slug}`))
 
 if (error.value || !service.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Dienstleistung nicht gefunden', fatal: true })
+  throw createError({ statusCode: 404, statusMessage: t('services.not_found'), fatal: true })
 }
 
 const title = computed(() => locale.value === 'en' ? service.value!.title_en : service.value!.title_de)
@@ -31,11 +31,12 @@ useSeoMeta({
 
 <template>
   <div class="bg-white">
-    <section class="border-b border-ink-100 bg-ink-50">
-      <div class="container py-12 md:py-16">
-        <NuxtLink :to="localePath('/dienstleistungen')" class="text-sm text-brand-700 hover:underline">← {{ t('services.back') }}</NuxtLink>
-        <h1 class="mt-4 text-3xl font-bold tracking-tight md:text-4xl">{{ title }}</h1>
-        <p class="mt-3 max-w-2xl text-ink-600">{{ summary }}</p>
+    <section class="relative overflow-hidden bg-gradient-to-br from-ink-900 via-brand-900 to-brand-800 text-white">
+      <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 20%, white 1px, transparent 1px); background-size: 32px 32px;" />
+      <div class="container relative py-12 md:py-16">
+        <NuxtLink :to="localePath('/dienstleistungen')" class="text-sm text-white/80 hover:text-white hover:underline">← {{ t('services.back') }}</NuxtLink>
+        <h1 class="mt-4 text-3xl font-bold tracking-tight text-white md:text-4xl">{{ title }}</h1>
+        <p class="mt-3 max-w-2xl text-ink-100/90">{{ summary }}</p>
       </div>
     </section>
 

@@ -7,46 +7,45 @@ const phoneLink = computed(() => settings.value?.phone?.replace(/\s/g, '') || ''
 </script>
 
 <template>
-  <article class="bg-white">
-    <div class="container max-w-3xl py-14 md:py-20">
-      <h1 class="text-3xl font-bold tracking-tight">{{ t('footer.impressum') }}</h1>
+  <div class="bg-white">
+    <section class="relative overflow-hidden bg-gradient-to-br from-ink-900 via-brand-900 to-brand-800 text-white">
+      <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 20%, white 1px, transparent 1px); background-size: 32px 32px;" />
+      <div class="container relative max-w-3xl py-14 md:py-20">
+        <h1 class="text-3xl font-bold tracking-tight text-white md:text-4xl">{{ t('legal.impressum.title') }}</h1>
+      </div>
+    </section>
 
-      <div class="prose prose-slate mt-8 max-w-none text-ink-700">
-        <h2>Angaben gemäss Schweizer Recht</h2>
+    <article class="container max-w-3xl py-10 md:py-14">
+      <div class="prose prose-slate max-w-none text-ink-700">
+        <h2>{{ t('legal.impressum.info_title') }}</h2>
         <p>
           <strong>{{ settings?.company_name }}</strong><br />
+          <template v-if="settings?.owner_name">{{ settings.owner_name }}<br /></template>
           <template v-if="settings?.street">{{ settings.street }}<br /></template>
-          <template v-if="settings?.zip || settings?.city">{{ settings?.zip }} {{ settings?.city }}<template v-if="settings?.canton">, Kanton {{ settings.canton }}</template><br /></template>
+          <template v-if="settings?.zip || settings?.city">{{ settings?.zip }} {{ settings?.city }}<br /></template>
           {{ settings?.country || 'Schweiz' }}
         </p>
 
-        <h2>Kontakt</h2>
+        <h2>{{ t('legal.impressum.contact') }}</h2>
         <p>
-          <template v-if="settings?.phone">Telefon: {{ settings.phone }}<br /></template>
-          <template v-if="settings?.email">E-Mail: {{ settings.email }}</template>
+          <template v-if="settings?.phone">{{ t('offer.step4.phone') }}: <a :href="`tel:${phoneLink}`">{{ settings.phone }}</a><br /></template>
+          <template v-if="settings?.email">{{ t('offer.step4.email') }}: <a :href="`mailto:${settings.email}`">{{ settings.email }}</a></template>
         </p>
-
-        <h2>Verantwortlich für den Inhalt</h2>
-        <p>{{ settings?.owner_name || '[Wird ergänzt]' }}</p>
 
         <template v-if="settings?.uid_number">
-          <h2>Handelsregister / UID</h2>
-          <p>UID-Nummer: {{ settings.uid_number }}</p>
+          <h2>{{ t('legal.impressum.uid_title') }}</h2>
+          <p>{{ t('legal.impressum.uid_label') }}: {{ settings.uid_number }}</p>
         </template>
 
-        <h2>Haftungsausschluss</h2>
-        <p>
-          Der Inhaber übernimmt keinerlei Gewähr hinsichtlich der inhaltlichen Richtigkeit, Genauigkeit, Aktualität,
-          Zuverlässigkeit und Vollständigkeit der Informationen. Haftungsansprüche gegen den Inhaber wegen Schäden materieller
-          oder immaterieller Art, welche aus dem Zugriff oder der Nutzung bzw. Nichtnutzung der Informationen entstehen, werden ausgeschlossen.
-        </p>
+        <h2>{{ t('legal.impressum.disclaimer.title') }}</h2>
+        <p>{{ t('legal.impressum.disclaimer.text') }}</p>
 
-        <h2>Urheberrechte</h2>
-        <p>
-          Die Urheber- und alle anderen Rechte an Inhalten, Bildern, Fotos oder anderen Dateien auf dieser Website gehören
-          ausschliesslich dem Betreiber dieser Website oder den speziell genannten Rechteinhabern.
-        </p>
+        <h2>{{ t('legal.impressum.links.title') }}</h2>
+        <p>{{ t('legal.impressum.links.text') }}</p>
+
+        <h2>{{ t('legal.impressum.copyright.title') }}</h2>
+        <p>{{ t('legal.impressum.copyright.text', { company: settings?.company_name }) }}</p>
       </div>
-    </div>
-  </article>
+    </article>
+  </div>
 </template>

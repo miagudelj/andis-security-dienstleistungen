@@ -28,7 +28,8 @@
     "request_offer": "Offerte zu dieser Dienstleistung",
     "back": "Zurück zur Übersicht",
     "loading": "Wird geladen…",
-    "empty": "Noch keine Dienstleistungen veröffentlicht."
+    "empty": "Noch keine Dienstleistungen veröffentlicht.",
+    "not_found": "Dienstleistung nicht gefunden"
   },
   "offer_cta": {
     "label": "Gratis Offerte"
@@ -86,6 +87,19 @@
       "network": "Verbindungsproblem. Bitte prüfen Sie Ihre Internetverbindung."
     }
   },
+  "about": {
+    "title": "Über uns",
+    "subtitle": "Lernen Sie unser Team und unsere Mission kennen",
+    "meta_description": "Erfahren Sie mehr über PreSecurity – Ihr Partner für Sicherheitslösungen im Kanton Zürich. Unser erfahrenes Team steht Ihnen zur Verfügung.",
+    "team_title": "Unser Team",
+    "team_subtitle": "Erfahrene Fachkräfte, die jeden Auftrag mit höchster Sorgfalt und Professionalität begleiten.",
+    "no_team_members": "Noch keine Teammitglieder vorhanden.",
+    "about_us_title": "Über uns",
+    "cta_title": "Bereit für mehr Sicherheit?",
+    "cta_subtitle": "Kontaktieren Sie uns für eine unverbindliche Beratung oder fordern Sie direkt eine kostenlose Offerte an.",
+    "cta_contact": "Kontakt aufnehmen",
+    "cta_quote": "Kostenlose Offerte"
+  },
   "footer": {
     "tagline": "Ihre Sicherheit. Unser Handwerk.",
     "company": "Unternehmen",
@@ -121,6 +135,117 @@
   "common": {
     "loading": "Wird geladen…",
     "copy": "Kopieren",
-    "copied": "Kopiert!"
+    "copied": "Kopiert!",
+    "canton": "Kanton"
+  },
+  "legal": {
+    "agb": {
+      "title": "Allgemeine Geschäftsbedingungen",
+      "scope": {
+        "title": "1. Geltungsbereich",
+        "text": "Diese Allgemeinen Geschäftsbedingungen (AGB) regeln das Vertragsverhältnis zwischen {company} (nachfolgend \"Anbieter\") und der Kundschaft im Zusammenhang mit Beratungs-, Planungs-, Installations- und Wartungsleistungen für Sicherheitssysteme."
+      },
+      "contract": {
+        "title": "2. Offerte und Vertragsabschluss",
+        "text": "Alle Offerten sind unverbindlich und freibleibend. Ein Vertrag kommt erst durch die schriftliche Auftragsbestätigung des Anbieters oder mit Beginn der Leistungserbringung zustande. Mündliche Nebenabreden bedürfen der schriftlichen Bestätigung."
+      },
+      "payment": {
+        "title": "3. Preise und Zahlungsbedingungen",
+        "text": "Es gelten die in der Auftragsbestätigung genannten Preise in Schweizer Franken (CHF). Die Preise verstehen sich exklusive Mehrwertsteuer, sofern nicht anders angegeben. Rechnungen sind innerhalb von 30 Tagen netto ab Rechnungsdatum zahlbar. Bei Zahlungsverzug wird ein Verzugszins von 5% p.a. erhoben."
+      },
+      "service": {
+        "title": "4. Leistungserbringung",
+        "text": "Der Anbieter erbringt die vereinbarten Leistungen fachgerecht und nach den anerkannten Regeln der Technik. Terminvereinbarungen sind verbindlich, sofern sie schriftlich als solche bezeichnet wurden. Bei Verzögerungen, die nicht vom Anbieter zu vertreten sind, verlängern sich vereinbarte Fristen entsprechend."
+      },
+      "cooperation": {
+        "title": "5. Mitwirkungspflichten der Kundschaft",
+        "text": "Die Kundschaft gewährt dem Anbieter den erforderlichen Zugang zu den Räumlichkeiten und stellt die notwendige Infrastruktur (Strom, etc.) zur Verfügung. Verzögerungen aufgrund fehlender Mitwirkung gehen zu Lasten der Kundschaft."
+      },
+      "warranty": {
+        "title": "6. Gewährleistung",
+        "text": "Es gelten die gesetzlichen Gewährleistungsbestimmungen gemäss Schweizer Obligationenrecht. Für eingebaute Komponenten gelten die Garantiebedingungen der jeweiligen Hersteller. Mängel sind unverzüglich nach Entdeckung schriftlich zu melden."
+      },
+      "liability": {
+        "title": "7. Haftung",
+        "text": "Der Anbieter haftet für Schäden, die durch vorsätzliches oder grobfahrlässiges Verhalten verursacht werden. Die Haftung für leichte Fahrlässigkeit ist ausgeschlossen, soweit gesetzlich zulässig. Die Haftung ist in jedem Fall auf den Auftragswert begrenzt. Für indirekte Schäden, entgangenen Gewinn oder Folgeschäden wird keine Haftung übernommen."
+      },
+      "confidentiality": {
+        "title": "8. Geheimhaltung",
+        "text": "Beide Parteien verpflichten sich, vertrauliche Informationen, die im Rahmen der Zusammenarbeit bekannt werden, geheim zu halten und nicht an Dritte weiterzugeben."
+      },
+      "jurisdiction": {
+        "title": "9. Anwendbares Recht und Gerichtsstand",
+        "text": "Es gilt ausschliesslich schweizerisches Recht unter Ausschluss des Kollisionsrechts und des UN-Kaufrechts. Ausschliesslicher Gerichtsstand ist {city}, Schweiz."
+      },
+      "severability": {
+        "title": "10. Salvatorische Klausel",
+        "text": "Sollten einzelne Bestimmungen dieser AGB unwirksam sein oder werden, so wird dadurch die Wirksamkeit der übrigen Bestimmungen nicht berührt. Die unwirksame Bestimmung ist durch eine wirksame zu ersetzen, die dem wirtschaftlichen Zweck am nächsten kommt."
+      },
+      "updated": "Stand: August 2026"
+    },
+    "datenschutz": {
+      "title": "Datenschutzerklärung",
+      "responsible": {
+        "title": "1. Verantwortliche Stelle",
+        "text": "{company}, {address}, {country}"
+      },
+      "data": {
+        "title": "2. Erfasste Daten",
+        "intro": "Wir erfassen folgende Daten, wenn Sie uns über das Offerten-Formular kontaktieren:",
+        "items": {
+          "name": "Vor- und Nachname",
+          "email": "E-Mail-Adresse",
+          "phone": "Telefonnummer",
+          "address": "Adresse (Strasse, PLZ, Ort)",
+          "services": "Angaben zu gewünschten Dienstleistungen",
+          "message": "Optionale Nachricht"
+        },
+        "technical": "Zusätzlich werden beim Besuch der Webseite technische Daten (z.B. Zeitpunkt des Zugriffs) in anonymisierter Form erfasst."
+      },
+      "purpose": {
+        "title": "3. Zweck der Datenverarbeitung",
+        "text": "Die erhobenen Daten werden ausschliesslich zur Bearbeitung Ihrer Anfrage und zur Kontaktaufnahme verwendet. Es findet keine Weitergabe an Dritte zu Werbezwecken statt."
+      },
+      "retention": {
+        "title": "4. Speicherdauer",
+        "text": "Anfragen werden so lange gespeichert, wie es zur Bearbeitung Ihrer Anfrage und zur Erfüllung gesetzlicher Aufbewahrungspflichten notwendig ist (in der Regel 10 Jahre für Geschäftsunterlagen gemäss Schweizer Obligationenrecht)."
+      },
+      "cookies": {
+        "title": "5. Cookies",
+        "text": "Diese Webseite verwendet ausschliesslich technisch notwendige Cookies für den Betrieb der Seite. Es werden keine Tracking-Cookies oder Cookies von Drittanbietern eingesetzt."
+      },
+      "rights": {
+        "title": "6. Ihre Rechte",
+        "text": "Sie haben das Recht auf Auskunft, Berichtigung und Löschung Ihrer personenbezogenen Daten. Für entsprechende Anfragen wenden Sie sich bitte an die oben genannte E-Mail-Adresse."
+      },
+      "security": {
+        "title": "7. Datensicherheit",
+        "text": "Wir treffen angemessene technische und organisatorische Massnahmen, um Ihre Daten vor unbefugtem Zugriff, Verlust oder Missbrauch zu schützen. Die Übertragung erfolgt verschlüsselt."
+      },
+      "changes": {
+        "title": "8. Änderungen",
+        "text": "Wir behalten uns vor, diese Datenschutzerklärung bei Bedarf anzupassen. Die aktuelle Version ist stets auf dieser Seite einsehbar."
+      },
+      "updated": "Stand: August 2026"
+    },
+    "impressum": {
+      "title": "Impressum",
+      "info_title": "Angaben gemäss Art. 3 UWG",
+      "contact": "Kontakt",
+      "uid_title": "Unternehmens-Identifikation",
+      "uid_label": "UID",
+      "disclaimer": {
+        "title": "Haftungsausschluss",
+        "text": "Der Autor übernimmt keine Gewähr für die Richtigkeit, Genauigkeit, Aktualität, Zuverlässigkeit und Vollständigkeit der Informationen auf dieser Webseite. Haftungsansprüche gegen den Autor wegen Schäden materieller oder immaterieller Art, die aus dem Zugriff oder der Nutzung bzw. Nichtnutzung der veröffentlichten Informationen entstehen, werden ausgeschlossen, sofern kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden vorliegt."
+      },
+      "links": {
+        "title": "Haftung für Links",
+        "text": "Verweise und Links auf Webseiten Dritter liegen ausserhalb unseres Verantwortungsbereichs. Jegliche Verantwortung für solche Webseiten wird abgelehnt. Der Zugriff auf und die Nutzung solcher Webseiten erfolgen auf eigene Gefahr der Nutzerin oder des Nutzers."
+      },
+      "copyright": {
+        "title": "Urheberrechte",
+        "text": "Die Urheber- und alle anderen Rechte an Inhalten, Bildern, Fotos oder anderen Dateien auf dieser Webseite gehören ausschliesslich {company} oder den speziell genannten Rechteinhabern. Für die Reproduktion jeglicher Elemente ist die schriftliche Zustimmung des Urheberrechtsträgers im Voraus einzuholen."
+      }
+    }
   }
 }

@@ -44,6 +44,10 @@ const inverted = computed(() => isHeroDominant.value && !mobileOpen.value)
           :class="['text-sm font-medium transition-colors', inverted ? 'text-white/90 hover:text-white' : 'text-ink-700 hover:text-brand-700']"
         >{{ t('nav.services') }}</NuxtLink>
         <NuxtLink
+          :to="localePath('/ueber-uns')"
+          :class="['text-sm font-medium transition-colors', inverted ? 'text-white/90 hover:text-white' : 'text-ink-700 hover:text-brand-700']"
+        >{{ t('nav.about') }}</NuxtLink>
+        <NuxtLink
           :to="localePath('/kontakt')"
           :class="['text-sm font-medium transition-colors', inverted ? 'text-white/90 hover:text-white' : 'text-ink-700 hover:text-brand-700']"
         >{{ t('nav.contact') }}</NuxtLink>
@@ -73,6 +77,7 @@ const inverted = computed(() => isHeroDominant.value && !mobileOpen.value)
       <div class="container flex flex-col gap-3 py-4">
         <NuxtLink :to="localePath('/')" class="py-2 text-sm font-medium text-ink-800" @click="mobileOpen = false">{{ t('nav.home') }}</NuxtLink>
         <NuxtLink :to="localePath('/dienstleistungen')" class="py-2 text-sm font-medium text-ink-800" @click="mobileOpen = false">{{ t('nav.services') }}</NuxtLink>
+        <NuxtLink :to="localePath('/ueber-uns')" class="py-2 text-sm font-medium text-ink-800" @click="mobileOpen = false">{{ t('nav.about') }}</NuxtLink>
         <NuxtLink :to="localePath('/kontakt')" class="py-2 text-sm font-medium text-ink-800" @click="mobileOpen = false">{{ t('nav.contact') }}</NuxtLink>
         <div class="flex items-center justify-between pt-2">
           <LanguageSwitcher />

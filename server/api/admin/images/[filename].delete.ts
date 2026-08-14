@@ -31,17 +31,9 @@ export default defineEventHandler(async (event) => {
 
   const db = useDB()
   const imagePath = `/images/${body.folder}/${safeFilename}`
-
-  const inUse = db.prepare('SELECT id FROM services WHERE image_path = ?').get(imagePath)
-  if (inUse) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: 'Bild wird noch verwendet und kann nicht gelöscht werden.',
-    })
-  }
-
   const fullPath = join(process.cwd(), 'public', 'images', body.folder, safeFilename)
 
+  // Delete the file
   try {
     await unlink(fullPath)
   } catch (err: unknown) {
@@ -56,6 +48,10 @@ export default defineEventHandler(async (event) => {
       statusMessage: 'Fehler beim Löschen des Bildes.',
     })
   }
+
+  // Remove references from database
+  db.prepare("UPDATE services SET image_path = '' WHERE image_path = ?").run(imagePath)
+  db.prepare("UPDATE team_members SET image_path = '' WHERE image_path = ?").run(imagePath)
 
   const ipHash = hashIP(getRequestIP(event, { xForwardedFor: true }) || '')
   logAudit('image_deleted', safeFilename, `folder=${body.folder}`, ipHash)

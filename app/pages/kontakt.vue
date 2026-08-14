@@ -14,10 +14,11 @@ const phoneLink = computed(() => settings.value?.phone?.replace(/\s/g, '') || ''
 
 <template>
   <div class="bg-white">
-    <section class="border-b border-ink-100 bg-ink-50">
-      <div class="container py-14 md:py-20">
-        <h1 class="text-3xl font-bold tracking-tight md:text-4xl">{{ t('nav.contact') }}</h1>
-        <p class="mt-3 max-w-2xl text-ink-600">{{ t('site.tagline') }}</p>
+    <section class="relative overflow-hidden bg-gradient-to-br from-ink-900 via-brand-900 to-brand-800 text-white">
+      <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 20%, white 1px, transparent 1px); background-size: 32px 32px;" />
+      <div class="container relative py-14 md:py-20">
+        <h1 class="text-3xl font-bold tracking-tight text-white md:text-4xl">{{ t('nav.contact') }}</h1>
+        <p class="mt-3 max-w-2xl text-ink-100/90">{{ t('site.tagline') }}</p>
       </div>
     </section>
 
@@ -30,7 +31,7 @@ const phoneLink = computed(() => settings.value?.phone?.replace(/\s/g, '') || ''
               <span class="text-brand-600">📍</span>
               <span>
                 <template v-if="settings?.street">{{ settings.street }}<br /></template>
-                {{ settings?.zip }} {{ settings?.city }}<template v-if="settings?.canton">, Kanton {{ settings.canton }}</template>
+                {{ settings?.zip }} {{ settings?.city }}<template v-if="settings?.canton">, {{ t('common.canton') }} {{ settings.canton }}</template>
               </span>
             </li>
             <li v-if="settings?.phone" class="flex gap-3">

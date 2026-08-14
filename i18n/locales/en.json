@@ -28,7 +28,8 @@
     "request_offer": "Quote for this service",
     "back": "Back to overview",
     "loading": "Loading…",
-    "empty": "No services published yet."
+    "empty": "No services published yet.",
+    "not_found": "Service not found"
   },
   "offer_cta": {
     "label": "Free quote"
@@ -86,6 +87,19 @@
       "network": "Connection problem. Please check your internet connection."
     }
   },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Meet our team and learn about our mission",
+    "meta_description": "Learn more about PreSecurity – your partner for security solutions in the Canton of Zurich. Our experienced team is at your service.",
+    "team_title": "Our Team",
+    "team_subtitle": "Experienced professionals who handle every project with the utmost care and professionalism.",
+    "no_team_members": "No team members available yet.",
+    "about_us_title": "About Us",
+    "cta_title": "Ready for more security?",
+    "cta_subtitle": "Contact us for a non-binding consultation or request a free quote directly.",
+    "cta_contact": "Get in touch",
+    "cta_quote": "Free Quote"
+  },
   "footer": {
     "tagline": "Your security. Our craft.",
     "company": "Company",
@@ -121,6 +135,117 @@
   "common": {
     "loading": "Loading…",
     "copy": "Copy",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "canton": "Canton"
+  },
+  "legal": {
+    "agb": {
+      "title": "Terms and Conditions",
+      "scope": {
+        "title": "1. Scope",
+        "text": "These General Terms and Conditions govern the contractual relationship between {company} (hereinafter \"Provider\") and the customer in connection with consulting, planning, installation and maintenance services for security systems."
+      },
+      "contract": {
+        "title": "2. Quotation and Contract",
+        "text": "All quotations are non-binding. A contract is only concluded upon written order confirmation by the Provider or upon commencement of service delivery. Verbal side agreements require written confirmation."
+      },
+      "payment": {
+        "title": "3. Prices and Payment Terms",
+        "text": "The prices stated in the order confirmation apply in Swiss Francs (CHF). Prices are exclusive of VAT unless otherwise stated. Invoices are payable within 30 days net from the invoice date. In case of late payment, default interest of 5% p.a. will be charged."
+      },
+      "service": {
+        "title": "4. Service Delivery",
+        "text": "The Provider delivers the agreed services professionally and in accordance with recognized technical standards. Scheduled appointments are binding if designated as such in writing. Delays not attributable to the Provider extend agreed deadlines accordingly."
+      },
+      "cooperation": {
+        "title": "5. Customer Cooperation",
+        "text": "The customer grants the Provider the necessary access to the premises and provides the required infrastructure (electricity, etc.). Delays due to lack of cooperation are at the customer's expense."
+      },
+      "warranty": {
+        "title": "6. Warranty",
+        "text": "The statutory warranty provisions under Swiss Code of Obligations apply. Manufacturer warranty conditions apply to installed components. Defects must be reported in writing immediately upon discovery."
+      },
+      "liability": {
+        "title": "7. Liability",
+        "text": "The Provider is liable for damages caused by intentional or grossly negligent conduct. Liability for slight negligence is excluded to the extent permitted by law. Liability is in any case limited to the order value. No liability is assumed for indirect damages, lost profits or consequential damages."
+      },
+      "confidentiality": {
+        "title": "8. Confidentiality",
+        "text": "Both parties undertake to keep confidential any information that becomes known in the course of cooperation and not to disclose it to third parties."
+      },
+      "jurisdiction": {
+        "title": "9. Applicable Law and Jurisdiction",
+        "text": "Swiss law applies exclusively, excluding conflict of laws provisions and the UN Convention on Contracts for the International Sale of Goods. The exclusive place of jurisdiction is {city}, Switzerland."
+      },
+      "severability": {
+        "title": "10. Severability Clause",
+        "text": "Should individual provisions of these Terms be or become invalid, the validity of the remaining provisions shall not be affected. The invalid provision shall be replaced by a valid one that comes closest to the economic purpose."
+      },
+      "updated": "Last updated: August 2026"
+    },
+    "datenschutz": {
+      "title": "Privacy Policy",
+      "responsible": {
+        "title": "1. Responsible Party",
+        "text": "{company}, {address}, {country}"
+      },
+      "data": {
+        "title": "2. Data Collected",
+        "intro": "We collect the following data when you contact us through the quotation form:",
+        "items": {
+          "name": "First and last name",
+          "email": "Email address",
+          "phone": "Phone number",
+          "address": "Address (street, ZIP code, city)",
+          "services": "Information about desired services",
+          "message": "Optional message"
+        },
+        "technical": "Additionally, technical data (e.g., time of access) is collected in anonymized form when visiting the website."
+      },
+      "purpose": {
+        "title": "3. Purpose of Data Processing",
+        "text": "The collected data is used exclusively for processing your inquiry and for contacting you. No data is shared with third parties for advertising purposes."
+      },
+      "retention": {
+        "title": "4. Retention Period",
+        "text": "Inquiries are stored for as long as necessary to process your request and to comply with legal retention obligations (typically 10 years for business documents under Swiss Code of Obligations)."
+      },
+      "cookies": {
+        "title": "5. Cookies",
+        "text": "This website only uses technically necessary cookies for site operation. No tracking cookies or third-party cookies are used."
+      },
+      "rights": {
+        "title": "6. Your Rights",
+        "text": "You have the right to information, correction and deletion of your personal data. For such requests, please contact the email address provided above."
+      },
+      "security": {
+        "title": "7. Data Security",
+        "text": "We take appropriate technical and organizational measures to protect your data from unauthorized access, loss or misuse. Data transmission is encrypted."
+      },
+      "changes": {
+        "title": "8. Changes",
+        "text": "We reserve the right to amend this privacy policy as needed. The current version is always available on this page."
+      },
+      "updated": "Last updated: August 2026"
+    },
+    "impressum": {
+      "title": "Imprint",
+      "info_title": "Information pursuant to Art. 3 UWG",
+      "contact": "Contact",
+      "uid_title": "Company Identification",
+      "uid_label": "UID",
+      "disclaimer": {
+        "title": "Disclaimer",
+        "text": "The author assumes no responsibility for the correctness, accuracy, timeliness, reliability and completeness of the information on this website. Liability claims against the author for material or immaterial damages arising from access to or use or non-use of the published information are excluded, unless there is demonstrable intentional or grossly negligent fault."
+      },
+      "links": {
+        "title": "Liability for Links",
+        "text": "References and links to third-party websites are outside our area of responsibility. Any responsibility for such websites is declined. Access to and use of such websites is at the user's own risk."
+      },
+      "copyright": {
+        "title": "Copyright",
+        "text": "The copyright and all other rights to content, images, photos or other files on this website belong exclusively to {company} or the specifically named rights holders. Written consent of the copyright holder must be obtained in advance for reproduction of any elements."
+      }
+    }
   }
 }

@@ -100,6 +100,21 @@ export interface CompanySettings {
   updated_at: string | null
 }
 
+export interface TeamMember {
+  id: number
+  first_name: string
+  last_name: string
+  position_de: string
+  position_en: string
+  slogan_de: string
+  slogan_en: string
+  image_path: string
+  sort_order: number
+  active: number
+  created_at?: string
+  updated_at?: string
+}
+
 // Status options for offers
 export const OFFER_STATUS_OPTIONS = [
   { value: 'new', label: 'Neu eingegangen', color: 'bg-blue-100 text-blue-700' },

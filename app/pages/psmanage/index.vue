@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
-import type { Offer, Service, WizardStep, CompanySettings } from '~/types/admin'
+import type { Offer, Service, WizardStep, CompanySettings, TeamMember } from '~/types/admin'
 
 definePageMeta({
   layout: 'admin',
@@ -17,13 +17,14 @@ const loginError = ref('')
 const loginLoading = ref(false)
 
 // Current tab
-const activeTab = ref<'offers' | 'services' | 'wizard' | 'settings'>('offers')
+const activeTab = ref<'offers' | 'services' | 'team' | 'wizard' | 'settings'>('offers')
 
 // =====================================================
 // DATA
 // =====================================================
 const offers = ref<Offer[]>([])
 const services = ref<Service[]>([])
+const teamMembers = ref<TeamMember[]>([])
 const wizardSteps = ref<WizardStep[]>([])
 const companySettings = ref<CompanySettings>({
   company_name: 'PreSecurity',
@@ -90,6 +91,12 @@ async function loadServices() {
   } catch { /* handled */ }
 }
 
+async function loadTeamMembers() {
+  try {
+    teamMembers.value = await fetchWithAuth<TeamMember[]>('/api/admin/team')
+  } catch { /* handled */ }
+}
+
 async function loadWizardSteps() {
   try {
     wizardSteps.value = await fetchWithAuth<WizardStep[]>('/api/admin/wizard/steps')
@@ -106,6 +113,7 @@ async function loadAllData() {
   await Promise.all([
     loadOffers(),
     loadServices(),
+    loadTeamMembers(),
     loadWizardSteps(),
     loadSettings(),
   ])
@@ -242,6 +250,61 @@ async function toggleServicePublished(service: Service) {
 }
 
 // =====================================================
+// TEAM ACTIONS
+// =====================================================
+async function saveTeamMember(member: Partial<TeamMember>, isNew: boolean) {
+  try {
+    if (isNew) {
+      await fetchWithAuth('/api/admin/team', {
+        method: 'POST',
+        body: member,
+      })
+    } else {
+      await fetchWithAuth(`/api/admin/team/${member.id}`, {
+        method: 'PUT',
+        body: member,
+      })
+    }
+    await loadTeamMembers()
+  } catch (e) {
+    console.error('Failed to save team member', e)
+  }
+}
+
+async function deleteTeamMember(member: TeamMember) {
+  try {
+    await fetchWithAuth(`/api/admin/team/${member.id}`, { method: 'DELETE' })
+    await loadTeamMembers()
+  } catch (e) {
+    console.error('Failed to delete team member', e)
+  }
+}
+
+async function toggleTeamMemberActive(member: TeamMember) {
+  try {
+    await fetchWithAuth(`/api/admin/team/${member.id}`, {
+      method: 'PUT',
+      body: { active: !member.active },
+    })
+    member.active = member.active ? 0 : 1
+  } catch (e) {
+    console.error('Failed to toggle team member', e)
+  }
+}
+
+async function reorderTeamMembers(memberIds: number[]) {
+  try {
+    await fetchWithAuth('/api/admin/team/reorder', {
+      method: 'PUT',
+      body: { memberIds },
+    })
+    await loadTeamMembers()
+  } catch (e) {
+    console.error('Failed to reorder team members', e)
+  }
+}
+
+// =====================================================
 // WIZARD ACTIONS
 // =====================================================
 async function saveWizardStep(step: Partial<WizardStep>, isNew: boolean) {
@@ -352,6 +415,7 @@ async function logout() {
   authed.value = false
   offers.value = []
   services.value = []
+  teamMembers.value = []
   wizardSteps.value = []
 }
 
@@ -448,6 +512,14 @@ onBeforeUnmount(() => {
             </button>
             <button
               class="relative pb-3 text-sm font-medium transition-colors"
+              :class="activeTab === 'team' ? 'text-brand-700' : 'text-ink-500 hover:text-ink-700'"
+              @click="activeTab = 'team'"
+            >
+              Team ({{ teamMembers.length }})
+              <span v-if="activeTab === 'team'" class="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-600"></span>
+            </button>
+            <button
+              class="relative pb-3 text-sm font-medium transition-colors"
               :class="activeTab === 'settings' ? 'text-brand-700' : 'text-ink-500 hover:text-ink-700'"
               @click="activeTab = 'settings'"
             >
@@ -485,6 +557,16 @@ onBeforeUnmount(() => {
             @toggle-active="toggleWizardStepActive"
             @reload="loadWizardSteps"
             @reorder="reorderWizardSteps"
+          />
+
+          <AdminTeam
+            v-else-if="activeTab === 'team'"
+            :team-members="teamMembers"
+            @save="saveTeamMember"
+            @delete="deleteTeamMember"
+            @toggle-active="toggleTeamMemberActive"
+            @reorder="reorderTeamMembers"
+            @reload="loadTeamMembers"
           />
 
           <AdminSettings
